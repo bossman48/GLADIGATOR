@@ -73,6 +73,51 @@ print("datasetName : ", datasetName)
 
 dataFromGraphFile = torch.load(sys.argv[1])
 
+
+def gatherDatasetInfo(dataset):
+  index = 0
+  indexGene = 0
+  indexDisease = 0
+  indexGeneGene = 0
+  indexDiseaseDisease = 0
+  indexGeneDisease = 0
+  while(index<len(dataset.gene_smybol)):
+    if(index%1000 == 0):
+      print("gatherDatasetInfo : ", index)
+    firstNode = dataset.gene_smybol[index]
+    secondNode = dataset.gene_smybol[index]
+    if(firstNode == ""):
+      indexDisease+=1
+    else:
+      indexGene+=1
+
+    if(secondNode == ""):
+      indexDisease+=1
+    else:
+      indexGene+=1
+    index+=1
+  index=0
+  while(index<len(dataset.edge_index[0])):
+    if(index%1000 == 0):
+      print("gatherDatasetInfo : ", index)
+    firstNode = dataset.gene_smybol[dataset.edge_index[0][index]]
+    secondNode = dataset.gene_smybol[dataset.edge_index[1][index]]
+
+
+    if(secondNode == "" and firstNode == ""):
+      indexDiseaseDisease+=1
+    elif(secondNode != "" and firstNode == ""):
+      indexGeneDisease+=1
+    elif(secondNode == "" and firstNode != ""):
+      indexGeneDisease+=1
+    elif(secondNode != "" and firstNode != ""):
+      indexGeneGene+=1
+    index+=1
+  print("\nGene number : ", indexGene, " Disease number : ", indexDisease, " Gene-gene edge number : ", indexGeneGene, " Disease-disease edge number : ", indexDiseaseDisease, " Gene-disease edge number : ", indexGeneDisease, " \n")
+
+
+gatherDatasetInfo(dataFromGraphFile)
+
 """
 print(dataFromGraphFile)
 print(dataFromGraphFile.gene_smybol[0])
