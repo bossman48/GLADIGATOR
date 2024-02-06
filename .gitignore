@@ -5,6 +5,6 @@ graph-files-main-backup/
 source-files-main-backup/
 Comparison-Open-Graph-Dataset/Build_Graph/dataset/
 *.ipynb
-*.pt
+graph-files/*.pt
 source-files/AllGeneDiseaseLinkedData40.csv
 source-files/BIOGRID-ORGANISM-Homo_sapiens-4.4.217.tab.txt

@@ -192,7 +192,7 @@ print(type(vectorizedTemp2[0]))
 
 """# embedding function
 
-# bıild biobert_v1.1
+# build biobert_v1.1
 """
 
 #!pip install -q transformers
