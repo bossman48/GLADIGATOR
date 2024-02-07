@@ -1,3 +1,8 @@
+<p align="center"> 
+    <img src="build-ogb-graph.png">
+</p>
+
+
 if you want to run code, please run this command in terminal/command prompt
 
 *** python build_graph_ogb_comparison.py ***

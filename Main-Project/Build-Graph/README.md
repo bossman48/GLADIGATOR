@@ -1,5 +1,5 @@
 <p align="center"> 
-<img width="925" alt="ASCARIS_Overall_Workflow" src="build-main-graph.png">
+    <img src="build-main-graph.png">
 </p>
 
 

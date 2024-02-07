@@ -1,3 +1,7 @@
+<p align="center"> 
+    <img src="run-model.png">
+</p>
+
 if you want to run code, please run this command in terminal/command prompt
 
 ***	python run_model.py "../../graph-files/Graph_Own_0.5.pt" (min score: 0.5)***
