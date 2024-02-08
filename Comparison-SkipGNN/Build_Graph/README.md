@@ -1,9 +1,23 @@
+# Build-Graph
+
+In this part, we want to build a graph based on DisGeNet-curated dataset. Steps' of the build operation is mentioned in below. 
+
 <p align="center"> 
     <img src="build-skipgnn-graph.png">
 </p>
 
-if you want to run code, please run this command in terminal/command prompt
+---
 
-*** python build_graph_skipgnn_comparison.py ***
+## Example Usages
+For example, you want build a graph based on DisGeNet curated dataset, you can run this command.
 
-*	Note: python keyword call Python3 *
+
+```
+    python3 build_graph_skipgnn_comparison.py 
+```
+
+---
+
+:warning:
+
+In your machine you can call ***python*** instead of ***python3***
