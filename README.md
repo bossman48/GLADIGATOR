@@ -32,6 +32,15 @@ In addition, gene-gene associations and disease-disease associations are added. 
 
 ## Descriptions of folders and files in the GeDiLiP repository 
 
+:warning: :warning:
+
+1. GeDiLiP on customized dataset is stored in **Main-Project** folder. 
+2. GeDiLiP on SkipGNN's dataset(DisGeNet-curated) is stored in **Comparison-SkipGNN** folder. 
+3. GeDiLiP on OGB's dataset(ogbl-biokg) is stored in **Comparison-SkipGNN** folder. 
+
+There is a readme file inside of the every project folder.
+
+There is a project diagrams [file](master-project-diagrams.drawio) that is built in drawio.  
 
 &nbsp;
 
@@ -43,14 +52,7 @@ This section intends to guide the users on how to run GeDiLiP.
 
 First of all, please readme files inside **source-files** and **graph-files** folders. File unzip operations are required. File unzip operations' command is written in readme files in **source-files** and **graph-files** folders.
 
-:warning: :warning:
 
-1. GeDiLiP on customized dataset is stored in **Main-Project** folder. 
-2. GeDiLiP on SkipGNN's dataset(DisGeNet-curated) is stored in **Comparison-SkipGNN** folder. 
-3. GeDiLiP on OGB's dataset(ogbl-biokg) is stored in **Comparison-SkipGNN** folder. 
-
-There is a readme file inside of the every project folder.
-There is a project diagrams [file](master-project-diagrams.drawio) that is built in drawio.  
 &nbsp;
 
 ## License
