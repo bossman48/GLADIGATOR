@@ -41,7 +41,7 @@ This section intends to guide the users on how to run GeDiLiP.
 
 :warning: :warning: 
 
-First of all, please unzip required files as described in the **source-files** and **graph-files** folder. File unzip operations' command is written in readme files in **source-files** and **graph-files** folders.
+First of all, please readme files inside **source-files** and **graph-files** folders. File unzip operations are required. File unzip operations' command is written in readme files in **source-files** and **graph-files** folders.
 
 :warning: :warning:
 
