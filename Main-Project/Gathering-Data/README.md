@@ -1,9 +1,22 @@
-if you want to run code, please run this command in terminal/command prompt
+# Gathering-Data
+This part is used to gather information from UMLS and DisGeNet via using API. 
+
+
+:warning:
+
+Before run this programs, you must build config.py file that store required information when access UMLS and DisGeNet API.
+
+Apikey is required to access [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server. Apikey is used to gather data from [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server, you can research in this [documentation](https://documentation.uts.nlm.nih.gov/rest/search/)
+
+Email and password is used to enroll to the Disgenet, you can research in this [documentation](https://www.disgenet.org/api/).
+
+:warning:
 
 Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder.
 
-Inside of the config.py file is mention in below
+:warning:
 
+Inside of the config.py file is mention in below
 
 	config = {
 		"email":"example@example.com",
@@ -11,15 +24,26 @@ Inside of the config.py file is mention in below
 		"apikey":"example-apikey"
 	}
 
-apikey is used to gather data from "https://uts-ws.nlm.nih.gov/rest/content/", you can look this link(https://documentation.uts.nlm.nih.gov/rest/search/)
-email and password is used to enroll to the Disgenet, you can look this link(https://www.disgenet.org/api/).
+
+:warning:
 
 
-if you want to gather Disgenet informations, you should this command that mentioned in below.
-***python gather_gene_disease_information.py***
+if you want to gather DisGeNet informations, you should this command that mentioned in below.
+```
+	python3 gather_gene_disease_information.py
+```
 
-if you want to gather diseases informations, you should this command that mentioned in below.
-***python gather_disease_data_from_umls.py***
+---
 
 
-*	Note: python keyword call Python3 *
+if you want to gather diseases informations from UMLS, you should this command that mentioned in below.
+
+```
+	python3 gather_disease_data_from_umls.py
+```
+
+
+
+:warning:
+
+In your machine you can call ***python*** instead of ***python3***

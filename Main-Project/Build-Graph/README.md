@@ -1,12 +1,42 @@
+# Build-Graph
+
+In this part, customizable graph files are built. Steps' of the build customizable graph is mentioned in below. 
+
+:warning:
+
 <p align="center"> 
     <img src="build-main-graph.png">
 </p>
 
 
-if you want to run code, please run this command in terminal/command prompt
+## Input Parameter
 
-*** python build_graph.py 0.5 (min socre: 0.5) (default)***
-*** python build_graph.py 0.1 (min socre: 0.1)***
-*** python build_graph.py 0.05 (min socre: 0.05)***
+Only input parameter is gene-disease score. 
 
-*	Note: python keyword call Python3 *
+### Example Usages
+For example, you want build a graph that gene-disease score is equal and more that 0.5, you can run this command.
+
+```
+    python3 build_graph.py 0.5
+```
+
+---
+
+Another example, you want build a graph that gene-disease score is equal and more that 0.1, you can run this command.
+
+```
+    python3 build_graph.py 0.1
+```
+
+---
+
+Another example, you want build a graph that gene-disease score is equal and more that 0.05, you can run this command.
+
+```
+    python3 build_graph.py 0.05
+```
+
+
+:warning:
+
+In your machine you can call ***python*** instead of ***python3***
