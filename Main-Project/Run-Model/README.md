@@ -30,7 +30,7 @@ Another example, you want run model with min gene-disase score is 0.1, you can c
 
 :warning:
 
-In your machine you can call ***python*** instead of ***python3*** 
+***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
 
 ## Output Files
 

@@ -39,4 +39,4 @@ Another example, you want build a graph that gene-disease score is equal and mor
 
 :warning:
 
-In your machine you can call ***python*** instead of ***python3***
+***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.

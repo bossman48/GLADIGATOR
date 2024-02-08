@@ -17,11 +17,11 @@ In addition, gene-gene associations and disease-disease associations are added. 
 - Install dependencies
 
     - all test run on CPU, if you want to run other devices, you should change some packages.
-    - in Ubuntu (Recommended)
+    - in Ubuntu (Recommended) or MacOS, 
     ```
         pip3 install -r requirementsUbuntu.txt
     ```
-    - in Windows or MacOS,
+    - in Windows,
     ```
         pip3 install -r requirements.txt
     ```
@@ -50,7 +50,7 @@ First of all, please readme files inside **source-files** and **graph-files** fo
 3. GeDiLiP on OGB's dataset(ogbl-biokg) is stored in **Comparison-SkipGNN** folder. 
 
 There is a readme file inside of the every project folder.
-
+There is a project diagrams [file](master-project-diagrams.drawio) that is built in drawio.  
 &nbsp;
 
 ## License
