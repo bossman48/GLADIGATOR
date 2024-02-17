@@ -72,9 +72,11 @@ print("datasetName : ", datasetName)
 
 
 dataFromGraphFile = torch.load(sys.argv[1])
+print("Graph file  : ",dataFromGraphFile)
 
 
 def gatherDatasetInfo(dataset):
+  print("Gather Dataset Info function is started")
   index = 0
   indexGene = 0
   indexDisease = 0
@@ -82,8 +84,6 @@ def gatherDatasetInfo(dataset):
   indexDiseaseDisease = 0
   indexGeneDisease = 0
   while(index<len(dataset.gene_smybol)):
-    if(index%1000 == 0):
-      print("gatherDatasetInfo : ", index)
     firstNode = dataset.gene_smybol[index]
     secondNode = dataset.gene_smybol[index]
     if(firstNode == ""):
@@ -98,20 +98,19 @@ def gatherDatasetInfo(dataset):
     index+=1
   index=0
   while(index<len(dataset.edge_index[0])):
-    if(index%1000 == 0):
-      print("gatherDatasetInfo : ", index)
-    firstNode = dataset.gene_smybol[dataset.edge_index[0][index]]
-    secondNode = dataset.gene_smybol[dataset.edge_index[1][index]]
+    if(dataset.edge_index[0][index]<=dataset.edge_index[1][index]):
+      firstNode = dataset.gene_smybol[dataset.edge_index[0][index]]
+      secondNode = dataset.gene_smybol[dataset.edge_index[1][index]]
 
 
-    if(secondNode == "" and firstNode == ""):
-      indexDiseaseDisease+=1
-    elif(secondNode != "" and firstNode == ""):
-      indexGeneDisease+=1
-    elif(secondNode == "" and firstNode != ""):
-      indexGeneDisease+=1
-    elif(secondNode != "" and firstNode != ""):
-      indexGeneGene+=1
+      if(secondNode == "" and firstNode == ""):
+        indexDiseaseDisease+=1
+      elif(secondNode != "" and firstNode == ""):
+        indexGeneDisease+=1
+      elif(secondNode == "" and firstNode != ""):
+        indexGeneDisease+=1
+      elif(secondNode != "" and firstNode != ""):
+        indexGeneGene+=1
     index+=1
   print("\nGene number : ", indexGene, " Disease number : ", indexDisease, " Gene-gene edge number : ", indexGeneGene, " Disease-disease edge number : ", indexDiseaseDisease, " Gene-disease edge number : ", indexGeneDisease, " \n")
 
@@ -443,9 +442,10 @@ def buildGeneDiseaseEdgeIndexDict():
 
 buildGeneDiseaseEdgeIndexDict()
 
+"""
 for key, value in geneDiseaseEdgeIndexDict.items():
     print(key, ' : ', value)
-
+"""
 """# functions using dict"""
 
 def inList(geneID):
@@ -693,8 +693,10 @@ def splitEdgesBasedOnUniref50UsingDict():
         """
 
 
+    """
     if(index%1000 == 0):
       print("splitEdgesBasedOnUniref50UsingDict function is running, index : ", index)
+    """
     index = index  +  1
 
   train_edges = torch.tensor(train_edges_list)
@@ -744,6 +746,9 @@ import copy
 
 import torch
 from torch import Tensor
+
+# build negative edges based on random negative edge generator
+import random
 
 from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops, negative_sampling
@@ -820,6 +825,9 @@ class KZCLinkSplit(BaseTransform):
         self.add_negative_train_samples = add_negative_train_samples
         self.neg_sampling_ratio = neg_sampling_ratio
 
+        #gda index list
+        self.gdaIndexList = []
+
     def setLists(self,trainEdgeLabelIndex, valEdgeLabelIndex, testEdgeLabelIndex):
       self.trainEdgeLabelIndex = trainEdgeLabelIndex
       self.valEdgeLabelIndex = valEdgeLabelIndex
@@ -863,15 +871,27 @@ class KZCLinkSplit(BaseTransform):
         print(type(path))
         if(not os.path.isfile(path)):
           isExist = os.path.exists(GENERATED_NEGATIVE_EDGE_FOLDER)
-          if not isExist:
+          isFolderExist = os.path.exists(GENERATED_NEGATIVE_EDGE_FOLDER)
+          if not isFolderExist:
             # Create a new directory because it does not exist
             os.makedirs(GENERATED_NEGATIVE_EDGE_FOLDER)
-          tempDataset = self.gatherDiseaseGeneEdgeIndex(data)
-          print("Dataset: ", tempDataset)
+          # tempDataset = self.gatherDiseaseGeneEdgeIndex(data)
+          # print("Dataset: ", tempDataset)
+          print("asd")
+          """
           neg_edge_index = negative_sampling(
-              add_self_loops(tempDataset)[0], num_nodes=data.num_nodes,
-              num_neg_samples=num_neg, method='sparse')
+            add_self_loops(data.edge_index)[0], num_nodes=data.num_nodes,
+            num_neg_samples=num_neg, method='sparse')
+          print("Negative edge index : ", str(neg_edge_index))
+          print("Type: ", type(neg_edge_index))
+          print("Len: ", len(neg_edge_index[0]))
+          """
+          neg_edge_index = self.generateNegativeGeneDiseaseEdges(data,num_neg)
+          print("Negative edge index : ", str(neg_edge_index))
+          print("Type: ", type(neg_edge_index))
+          print("Len: ", len(neg_edge_index[0]))
           torch.save(neg_edge_index, path)
+
           print("Negative edges are created")
         else:
           neg_edge_index = torch.load(path)
@@ -945,6 +965,84 @@ class KZCLinkSplit(BaseTransform):
 
       return list_to_tensor
 
+
+
+    def generateNegativeGeneDiseaseEdges(self,dataset,numberOfNegativeEdges):
+      onlyGeneDiseaseTensor = [[],[]]
+      print("Generate Negative Edges function is started")
+      index = 0
+      while(index<numberOfNegativeEdges):
+        if(index%100 == 0):
+          print("Index of the generateNegativeGeneDiseaseEdges : ", index)
+        randomIndex1 = random.randint(0, len(dataset.gene_smybol)-1)
+        randomIndex2 = random.randint(0, len(dataset.gene_smybol)-1)
+
+        # check first node is gene or not
+        firstNode = True if(dataset.gene_smybol[randomIndex1]!="") else False
+        #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
+        # check second node is gene or not 
+        # if node is gene it is assigned to True, otherwise assigned False
+        secondNode = True if(dataset.gene_smybol[randomIndex2]!="") else False
+        #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
+      
+        if((firstNode and not secondNode) or ( not firstNode and secondNode)):
+          if(not self.hasEdgeBetweenNodes(dataset,randomIndex1,randomIndex2)):
+            #adding normal edge
+            onlyGeneDiseaseTensor[0].append(randomIndex1)
+            onlyGeneDiseaseTensor[1].append(randomIndex2)        
+            index+=1
+
+            #adding reverse edge
+            onlyGeneDiseaseTensor[0].append(randomIndex2)
+            onlyGeneDiseaseTensor[1].append(randomIndex1)        
+            index+=1
+
+      
+      list_to_tensor = torch.tensor(onlyGeneDiseaseTensor)
+
+      return list_to_tensor
+
+    def hasEdgeBetweenNodes(self, dataset, randomIndex1, randomIndex2):
+      index = 0
+      hasEdge = False
+      if(len(self.gdaIndexList) <= 0): 
+        self.gdaIndexList = self.generateListOfGeneDiseaseAssociation(dataset)
+      while(index<len(self.gdaIndexList)):
+        if(dataset.edge_index[0][self.gdaIndexList[index]] == randomIndex1 and dataset.edge_index[1][self.gdaIndexList[index]] == randomIndex2):
+          hasEdge = True
+          return hasEdge
+        elif(dataset.edge_index[1][self.gdaIndexList[index]] == randomIndex1 and dataset.edge_index[0][self.gdaIndexList[index]] == randomIndex2):
+          hasEdge = True
+          return hasEdge
+        index+=1
+      return hasEdge
+
+    def generateListOfGeneDiseaseAssociation(self, dataset):
+      if(len(self.gdaIndexList) > 0):
+        print("List of gda is initialized before")
+        return self.gdaIndexList
+      else:
+        print("list of gda initialization starts")
+        index = 0
+        while(index<len(dataset.edge_index[0])):
+          if(index%10000 == 0):
+            print("Index of the generateListOfGeneDiseaseAssociation : ", index)
+          # check first node is gene or not
+          firstNode = True if(dataset.gene_smybol[dataset.edge_index[0][index]]!="") else False
+          #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
+          # check second node is gene or not 
+          # if node is gene it is assigned to True, otherwise assigned False
+          secondNode = True if(dataset.gene_smybol[dataset.edge_index[1][index]]!="") else False
+          #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
+        
+          if((firstNode and not secondNode) or ( not firstNode and secondNode)):
+            self.gdaIndexList.append(index)
+          index += 1
+        return self.gdaIndexList
+
+      
+
+
     def _create_label(self, data: Data, index: Tensor, neg_edge_index: Tensor,baseTensor ,
                       out: Data ):
 
@@ -998,7 +1096,7 @@ initVariables()
 getNumberOfEdgesBetweenDiseaseGene()
 getNumberOfEdgesBetweenGeneGeneOrDiseaseDisease()
 buildGeneDiseaseEdgeIndexDict()
-print(geneDiseaseEdgeIndexDict)
+#print(geneDiseaseEdgeIndexDict)
 
 transform = KZCLinkSplit(is_undirected=True, num_val=val_ratio,num_test=test_ratio,add_negative_train_samples=True)
 
