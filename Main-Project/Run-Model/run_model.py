@@ -85,16 +85,11 @@ def gatherDatasetInfo(dataset):
   indexGeneDisease = 0
   while(index<len(dataset.gene_smybol)):
     firstNode = dataset.gene_smybol[index]
-    secondNode = dataset.gene_smybol[index]
     if(firstNode == ""):
       indexDisease+=1
     else:
       indexGene+=1
 
-    if(secondNode == ""):
-      indexDisease+=1
-    else:
-      indexGene+=1
     index+=1
   index=0
   while(index<len(dataset.edge_index[0])):
@@ -749,6 +744,11 @@ from torch import Tensor
 
 # build negative edges based on random negative edge generator
 import random
+# gather time info
+from datetime import datetime
+# run multithread
+import threading
+from multiprocessing.pool import ThreadPool
 
 from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops, negative_sampling
@@ -827,6 +827,7 @@ class KZCLinkSplit(BaseTransform):
 
         #gda index list
         self.gdaIndexList = []
+        self.gdaIndexDict = {}
 
     def setLists(self,trainEdgeLabelIndex, valEdgeLabelIndex, testEdgeLabelIndex):
       self.trainEdgeLabelIndex = trainEdgeLabelIndex
@@ -968,14 +969,63 @@ class KZCLinkSplit(BaseTransform):
 
 
     def generateNegativeGeneDiseaseEdges(self,dataset,numberOfNegativeEdges):
-      onlyGeneDiseaseTensor = [[],[]]
-      print("Generate Negative Edges function is started")
-      index = 0
-      while(index<numberOfNegativeEdges):
-        if(index%100 == 0):
-          print("Index of the generateNegativeGeneDiseaseEdges : ", index)
-        randomIndex1 = random.randint(0, len(dataset.gene_smybol)-1)
-        randomIndex2 = random.randint(0, len(dataset.gene_smybol)-1)
+      try:
+        onlyGeneDiseaseTensor = [[],[]]
+        print(datetime.now()," Generate Negative Edges function is started")
+        index = 0
+        while(index<numberOfNegativeEdges):
+          
+          randomIndex1 = random.randint(0, len(dataset.gene_smybol)-1)
+          randomIndex2 = random.randint(0, len(dataset.gene_smybol)-1)
+
+          # check first node is gene or not
+          firstNode = True if(dataset.gene_smybol[randomIndex1]!="") else False
+          #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
+          # check second node is gene or not 
+          # if node is gene it is assigned to True, otherwise assigned False
+          secondNode = True if(dataset.gene_smybol[randomIndex2]!="") else False
+          #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
+        
+          if((firstNode and not secondNode) or ( not firstNode and secondNode)):
+            if(not self.hasEdgeBetweenNodesBasedOnDict(dataset,randomIndex1,randomIndex2)):
+              if(index%100 == 0):
+                print(datetime.now()," Index of the generateNegativeGeneDiseaseEdges : ", index," rand1: ",randomIndex1," rand2 : ", randomIndex2)
+              #adding normal edge
+              onlyGeneDiseaseTensor[0].append(randomIndex1)
+              onlyGeneDiseaseTensor[1].append(randomIndex2)        
+              index+=1
+
+
+        
+        list_to_tensor = torch.tensor(onlyGeneDiseaseTensor)
+
+        return list_to_tensor
+      except Exception as exc:
+        print("generateNegativeGeneDiseaseEdges ",  exc)
+
+    def hasEdgeBetweenNodes(self, dataset, randomIndex1, randomIndex2):
+      try:
+        index = 0
+        hasEdge = False
+        if(len(self.gdaIndexList) <= 0): 
+          self.gdaIndexList = self.generateListOfGeneDiseaseAssociation(dataset)
+        while(index<len(self.gdaIndexList)):
+          if(dataset.edge_index[0][self.gdaIndexList[index]] == randomIndex1 and dataset.edge_index[1][self.gdaIndexList[index]] == randomIndex2):
+            hasEdge = True
+            return hasEdge
+          elif(dataset.edge_index[1][self.gdaIndexList[index]] == randomIndex1 and dataset.edge_index[0][self.gdaIndexList[index]] == randomIndex2):
+            hasEdge = True
+            return hasEdge
+          index+=1
+        return hasEdge
+      except Exception as exc:
+        print("hasEdgeBetweenNodes " , exc)
+
+    def hasEdgeBetweenNodesBasedOnDict(self, dataset, randomIndex1, randomIndex2):
+      try:
+        hasEdge = False
+        if(not bool(self.gdaIndexDict)): 
+          self.gdaIndexDict = self.generateDictOfGeneDiseaseAssociationBasedOnGeneThreads(dataset)
 
         # check first node is gene or not
         firstNode = True if(dataset.gene_smybol[randomIndex1]!="") else False
@@ -984,63 +1034,157 @@ class KZCLinkSplit(BaseTransform):
         # if node is gene it is assigned to True, otherwise assigned False
         secondNode = True if(dataset.gene_smybol[randomIndex2]!="") else False
         #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
-      
-        if((firstNode and not secondNode) or ( not firstNode and secondNode)):
-          if(not self.hasEdgeBetweenNodes(dataset,randomIndex1,randomIndex2)):
-            #adding normal edge
-            onlyGeneDiseaseTensor[0].append(randomIndex1)
-            onlyGeneDiseaseTensor[1].append(randomIndex2)        
+        if((firstNode and not secondNode)):
+          diseaseIndexList = self.gdaIndexDict[randomIndex1]
+          index = 0
+          while(index<len(diseaseIndexList)):
+            if(dataset.edge_index[0][diseaseIndexList[index]] == randomIndex1 and dataset.edge_index[1][diseaseIndexList[index]] == randomIndex2):
+              hasEdge = True
+              return hasEdge
+            elif(dataset.edge_index[1][diseaseIndexList[index]] == randomIndex1 and dataset.edge_index[0][diseaseIndexList[index]] == randomIndex2):
+              hasEdge = True
+              return hasEdge
+            index+=1
+        elif(not firstNode and secondNode):
+
+          diseaseIndexList = self.gdaIndexDict[randomIndex2]
+          index = 0
+          while(index<len(diseaseIndexList)):
+            if(dataset.edge_index[0][diseaseIndexList[index]] == randomIndex1 and dataset.edge_index[1][diseaseIndexList[index]] == randomIndex2):
+              hasEdge = True
+              return hasEdge
+            elif(dataset.edge_index[1][diseaseIndexList[index]] == randomIndex1 and dataset.edge_index[0][diseaseIndexList[index]] == randomIndex2):
+              hasEdge = True
+              return hasEdge
             index+=1
 
-            #adding reverse edge
-            onlyGeneDiseaseTensor[0].append(randomIndex2)
-            onlyGeneDiseaseTensor[1].append(randomIndex1)        
-            index+=1
-
-      
-      list_to_tensor = torch.tensor(onlyGeneDiseaseTensor)
-
-      return list_to_tensor
-
-    def hasEdgeBetweenNodes(self, dataset, randomIndex1, randomIndex2):
-      index = 0
-      hasEdge = False
-      if(len(self.gdaIndexList) <= 0): 
-        self.gdaIndexList = self.generateListOfGeneDiseaseAssociation(dataset)
-      while(index<len(self.gdaIndexList)):
-        if(dataset.edge_index[0][self.gdaIndexList[index]] == randomIndex1 and dataset.edge_index[1][self.gdaIndexList[index]] == randomIndex2):
-          hasEdge = True
-          return hasEdge
-        elif(dataset.edge_index[1][self.gdaIndexList[index]] == randomIndex1 and dataset.edge_index[0][self.gdaIndexList[index]] == randomIndex2):
-          hasEdge = True
-          return hasEdge
-        index+=1
-      return hasEdge
+        return hasEdge
+      except Exception as exc:
+        print("hasEdgeBetweenNodesBasedOnDict " , exc, " ", self.gdaIndexDict[randomIndex1]," ", self.gdaIndexDict[randomIndex2])
 
     def generateListOfGeneDiseaseAssociation(self, dataset):
-      if(len(self.gdaIndexList) > 0):
-        print("List of gda is initialized before")
-        return self.gdaIndexList
-      else:
-        print("list of gda initialization starts")
-        index = 0
-        while(index<len(dataset.edge_index[0])):
-          if(index%10000 == 0):
-            print("Index of the generateListOfGeneDiseaseAssociation : ", index)
+      try:
+        if(len(self.gdaIndexList) > 0):
+          print(datetime.now()," List of gda is initialized before")
+          return self.gdaIndexList
+        else:
+          print(datetime.now()," list of gda initialization starts")
+          index = 0
+          while(index<len(dataset.edge_index[0])):
+            if(dataset.edge_index[0][index]<=dataset.edge_index[1][index]):
+              if(index%1000 == 0):
+                print(datetime.now()," Index of the generateListOfGeneDiseaseAssociation : ", index)
+              # check first node is gene or not
+              firstNode = True if(dataset.gene_smybol[dataset.edge_index[0][index]]!="") else False
+              #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
+              # check second node is gene or not 
+              # if node is gene it is assigned to True, otherwise assigned False
+              secondNode = True if(dataset.gene_smybol[dataset.edge_index[1][index]]!="") else False
+              #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
+            
+              if((firstNode and not secondNode) or ( not firstNode and secondNode)):
+                self.gdaIndexList.append(index)
+            index += 1
+          print("GDA Index List len: ", len(self.gdaIndexList))
+          return self.gdaIndexList
+      except Exception as exc:
+        print("generateListOfGeneDiseaseAssociation ", exc)
+
+    def generateDictOfGeneDiseaseAssociationBasedOnGene(self, dataset):
+      # self.gdaIndexDict
+      try:
+        indexGDA = 0
+        if(len(self.gdaIndexList) <= 0): 
+          self.gdaIndexList = self.generateListOfGeneDiseaseAssociation(dataset)
+
+        while(indexGDA<len(dataset.gene_smybol)):
+          index = 0
+          diseaseIndexList = []
+          if(indexGDA%100 == 0):
+            print(datetime.now()," Index of the generateDictOfGeneDiseaseAssociationBasedOnGene : ", indexGDA)
+          while(index<len(self.gdaIndexList)):
+            if(dataset.edge_index[0][self.gdaIndexList[index]]<=dataset.edge_index[1][self.gdaIndexList[index]]):
+              # check first node is gene or not
+              firstNode = True if(dataset.gene_smybol[dataset.edge_index[0][self.gdaIndexList[index]]]!="") else False
+              #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
+              # check second node is gene or not 
+              # if node is gene it is assigned to True, otherwise assigned False
+              secondNode = True if(dataset.gene_smybol[dataset.edge_index[1][self.gdaIndexList[index]]]!="") else False
+              #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
+            
+              if((firstNode and not secondNode) and (dataset.edge_index[0][self.gdaIndexList[index]] == indexGDA)):
+                diseaseIndexList.append(self.gdaIndexList[index])
+              elif((not firstNode and secondNode) and (dataset.edge_index[1][self.gdaIndexList[index]] == indexGDA)):
+                diseaseIndexList.append(self.gdaIndexList[index])
+
+            index += 1
+
+          self.gdaIndexDict[indexGDA] = diseaseIndexList
+          indexGDA += 1
+        return self.gdaIndexDict
+      except Exception as exc:
+        print("generateDictOfGeneDiseaseAssociationBasedOnGene ", exc)
+
+    # not big performance difference is gathered
+    def generateDictOfGeneDiseaseAssociationBasedOnGeneThreads(self, dataset):
+          # self.gdaIndexDict
+          try:
+            indexGDA = 0
+            if(len(self.gdaIndexList) <= 0): 
+              self.gdaIndexList = self.generateListOfGeneDiseaseAssociation(dataset)
+            maxNumberOfThreads = 1000
+            totalNumberOfthreads = len(dataset.gene_smybol)
+            while(totalNumberOfthreads>0):
+              if(totalNumberOfthreads<maxNumberOfThreads):
+                maxNumberOfThreads = totalNumberOfthreads
+              totalNumberOfthreads = totalNumberOfthreads - maxNumberOfThreads
+              threads = list()
+              while(len(threads)<maxNumberOfThreads):
+                if(indexGDA<len(dataset.gene_smybol)):
+                  x = threading.Thread(target=self.whileLoopWithThreads, args=(indexGDA,dataset,))
+                  threads.append(x)
+                  indexGDA+=1
+                else:
+                  break
+
+              for x in threads:
+                x.start()
+              print("Total list of thread number : ", len(threads))
+              # Wait for all of them to finish
+              for x in threads:
+                x.join()
+            
+
+            return self.gdaIndexDict
+          except Exception as exc:
+            print("generateDictOfGeneDiseaseAssociationBasedOnGene ", exc)
+
+    def whileLoopWithThreads(self,indexGDA,dataset):
+      index = 0
+      diseaseIndexList = []
+      if(indexGDA%100 == 0):
+        print(datetime.now()," Index of the generateDictOfGeneDiseaseAssociationBasedOnGene : ", indexGDA)
+      while(index<len(self.gdaIndexList)):
+        if(dataset.edge_index[0][self.gdaIndexList[index]]<=dataset.edge_index[1][self.gdaIndexList[index]]):
           # check first node is gene or not
-          firstNode = True if(dataset.gene_smybol[dataset.edge_index[0][index]]!="") else False
+          firstNode = True if(dataset.gene_smybol[dataset.edge_index[0][self.gdaIndexList[index]]]!="") else False
           #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
           # check second node is gene or not 
           # if node is gene it is assigned to True, otherwise assigned False
-          secondNode = True if(dataset.gene_smybol[dataset.edge_index[1][index]]!="") else False
+          secondNode = True if(dataset.gene_smybol[dataset.edge_index[1][self.gdaIndexList[index]]]!="") else False
           #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
         
-          if((firstNode and not secondNode) or ( not firstNode and secondNode)):
-            self.gdaIndexList.append(index)
-          index += 1
-        return self.gdaIndexList
+          if((firstNode and not secondNode) and (dataset.edge_index[0][self.gdaIndexList[index]] == indexGDA)):
+            diseaseIndexList.append(self.gdaIndexList[index])
+          elif((not firstNode and secondNode) and (dataset.edge_index[1][self.gdaIndexList[index]] == indexGDA)):
+            diseaseIndexList.append(self.gdaIndexList[index])
 
+        index += 1
       
+      self.gdaIndexDict[indexGDA] = diseaseIndexList
+      if(indexGDA%100 == 0):
+        print(datetime.now()," Index of the generateDictOfGeneDiseaseAssociationBasedOnGene : ", indexGDA)
+      return
 
 
     def _create_label(self, data: Data, index: Tensor, neg_edge_index: Tensor,baseTensor ,
