@@ -988,7 +988,7 @@ class KZCLinkSplit(BaseTransform):
         
           if((firstNode and not secondNode) or ( not firstNode and secondNode)):
             if(not self.hasEdgeBetweenNodesBasedOnDict(dataset,randomIndex1,randomIndex2)):
-              if(index%100 == 0):
+              if(index%1000 == 0):
                 print(datetime.now()," Index of the generateNegativeGeneDiseaseEdges : ", index," rand1: ",randomIndex1," rand2 : ", randomIndex2)
               #adding normal edge
               onlyGeneDiseaseTensor[0].append(randomIndex1)
@@ -1025,8 +1025,9 @@ class KZCLinkSplit(BaseTransform):
       try:
         hasEdge = False
         if(not bool(self.gdaIndexDict)): 
-          self.gdaIndexDict = self.generateDictOfGeneDiseaseAssociationBasedOnGeneThreads(dataset)
-
+          # older attempt to build a dictionary
+          #self.gdaIndexDict = self.generateDictOfGeneDiseaseAssociationBasedOnGeneThreads(dataset)
+          self.gdaIndexDict = self.generateDictIndexByIndexOnEdgeIndex(dataset)
         # check first node is gene or not
         firstNode = True if(dataset.gene_smybol[randomIndex1]!="") else False
         #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
@@ -1035,9 +1036,9 @@ class KZCLinkSplit(BaseTransform):
         secondNode = True if(dataset.gene_smybol[randomIndex2]!="") else False
         #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
         if((firstNode and not secondNode)):
-          diseaseIndexList = self.gdaIndexDict[randomIndex1]
+          diseaseIndexList = self.gdaIndexDict.get(randomIndex1)
           index = 0
-          while(index<len(diseaseIndexList)):
+          while(diseaseIndexList != None and index<len(diseaseIndexList)):
             if(dataset.edge_index[0][diseaseIndexList[index]] == randomIndex1 and dataset.edge_index[1][diseaseIndexList[index]] == randomIndex2):
               hasEdge = True
               return hasEdge
@@ -1047,9 +1048,9 @@ class KZCLinkSplit(BaseTransform):
             index+=1
         elif(not firstNode and secondNode):
 
-          diseaseIndexList = self.gdaIndexDict[randomIndex2]
+          diseaseIndexList = self.gdaIndexDict.get(randomIndex2)
           index = 0
-          while(index<len(diseaseIndexList)):
+          while(diseaseIndexList != None and index<len(diseaseIndexList)):
             if(dataset.edge_index[0][diseaseIndexList[index]] == randomIndex1 and dataset.edge_index[1][diseaseIndexList[index]] == randomIndex2):
               hasEdge = True
               return hasEdge
@@ -1089,6 +1090,41 @@ class KZCLinkSplit(BaseTransform):
           return self.gdaIndexList
       except Exception as exc:
         print("generateListOfGeneDiseaseAssociation ", exc)
+
+    def generateDictIndexByIndexOnEdgeIndex(self, dataset):
+      try:
+        if(bool(self.gdaIndexDict)): 
+          print(datetime.now()," Dict of gda is initialized before")
+          return self.gdaIndexDict
+        else:
+          print(datetime.now()," Dict of gda initialization starts")
+          index = 0
+          while(index<len(dataset.edge_index[0])):
+            if(index%1000 == 0):
+                print(datetime.now()," Index of the generateDictIndexByIndexOnEdgeIndex : ", index)
+            if(dataset.edge_index[0][index]<=dataset.edge_index[1][index]):
+              # check first node is gene or not
+              firstNode = True if(dataset.gene_smybol[dataset.edge_index[0][index]]!="") else False
+              #firstNodeID = "" if(dataset.gene_smybol[randomIndex1]=="") else dataset.id[randomIndex1]
+              # check second node is gene or not 
+              # if node is gene it is assigned to True, otherwise assigned False
+              secondNode = True if(dataset.gene_smybol[dataset.edge_index[1][index]]!="") else False
+              #secondNodeID = "" if(dataset.gene_smybol[randomIndex2]=="") else dataset.id[randomIndex2]
+              if(firstNode and not secondNode):
+                if(self.gdaIndexDict.get(dataset.edge_index[0][index]) == None):
+                  self.gdaIndexDict[dataset.edge_index[0][index]] = [dataset.edge_index[0][index]]
+                else:
+                  self.gdaIndexDict[dataset.edge_index[0][index]].append(dataset.edge_index[0][index])
+              elif(not firstNode and secondNode):
+                if(self.gdaIndexDict.get(dataset.edge_index[1][index]) == None):
+                  self.gdaIndexDict[dataset.edge_index[1][index]] = [dataset.edge_index[1][index]]
+                else:
+                  self.gdaIndexDict[dataset.edge_index[1][index]].append(dataset.edge_index[1][index])
+
+            index += 1
+          return self.gdaIndexDict
+      except Exception as exc:
+        print("generateDictIndexByIndexOnEdgeIndex ", exc)
 
     def generateDictOfGeneDiseaseAssociationBasedOnGene(self, dataset):
       # self.gdaIndexDict
