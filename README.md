@@ -52,6 +52,186 @@ This section intends to guide the users on how to run GeDiLiP.
 
 First of all, please readme files inside **source-files** and **graph-files** folders. File unzip operations are required. File unzip operations' command is written in readme files in **source-files** and **graph-files** folders.
 
+# Proposed Project Steps:
+
+The proposed method is mentioned in below. Also inside of the Main-Project folder, proposed method's steps are mentioned with seperated folder.
+
+
+## **Gathering-Data**
+------------------------
+This part is used to gather information from UMLS and DisGeNet via using API. 
+
+
+:warning:
+
+Before run this programs, you must build config.py file that store required information when access UMLS and DisGeNet API.
+
+Apikey is required to access [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server. Apikey is used to gather data from [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server, you can research in this [documentation](https://documentation.uts.nlm.nih.gov/rest/search/)
+
+Email and password is used to enroll to the Disgenet, you can research in this [documentation](https://www.disgenet.org/api/).
+
+:warning:
+
+Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder.
+
+:warning:
+
+Inside of the config.py file is mention in below
+
+	config = {
+		"email":"example@example.com",
+		"password":"example",
+		"apikey":"example-apikey"
+	}
+
+
+:warning:
+
+
+if you want to gather DisGeNet informations, you should this command that mentioned in below.
+```
+	python3 gather_gene_disease_information.py
+```
+
+---
+
+
+if you want to gather diseases informations from UMLS, you should this command that mentioned in below.
+
+```
+	python3 gather_disease_data_from_umls.py
+```
+
+
+
+:warning:
+
+***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
+
+## **Build-Graph**
+------------------------
+
+In this part, customizable graph files are built. Steps' of the build customizable graph is mentioned in below. 
+
+:warning:
+
+<p align="center"> 
+    <img src="Main-Project/Build-Graph/build-main-graph.png">
+</p>
+
+
+### Input Parameter
+
+Only input parameter is gene-disease score. 
+
+#### Example Usages
+For example, you want build a graph that gene-disease score is equal and more that 0.5, you can run this command.
+
+```
+    python3 build_graph.py 0.5
+```
+
+---
+
+Another example, you want build a graph that gene-disease score is equal and more that 0.1, you can run this command.
+
+```
+    python3 build_graph.py 0.1
+```
+
+---
+
+Another example, you want build a graph that gene-disease score is equal and more that 0.05, you can run this command.
+
+```
+    python3 build_graph.py 0.05
+```
+
+
+:warning:
+
+***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
+
+
+## **Run-Model**
+------------------------
+
+In this part, our deep learning model is trained and tested. Steps' of the train/test process is mentioned in below.
+
+<p align="center"> 
+    <img src="Main-Project/Run-Model/run-model.png">
+</p>
+
+### Machine Learning Model
+
+In this part, our machine learning model's structure mentioned in below.
+<p align="center"> 
+    <img src="Main-Project/Run-Model/NN-Structure.png">
+</p>
+
+### Input Parameter
+Only input parameter is a path of the graph file that is a dataset model is trained/tested on this dataset.
+
+#### Example Usages
+For example, you want run model with min gene-disase score is 0.5, you can call this command.
+```
+    python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
+```
+
+Another example, you want run model with min gene-disase score is 0.1, you can call this command.
+
+```
+    python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
+```
+
+Another example, you want run model with min gene-disase score is 0.1, you can call this command.
+
+```
+    python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
+```
+
+
+:warning:
+
+***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
+
+## Output Files
+
+After train model operation is completed. Best validation and test result is stored in a csv file.
+
+---
+
+For example, you run this command, that is mentioned in below.
+```
+    python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
+```
+
+End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.5.csv*** and ***test-resultsGraph_Own_0.5.csv***
+
+---
+
+Another example, you run this command, that is mentioned in below.
+
+```
+    python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
+```
+
+End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.1.csv*** and ***test-resultsGraph_Own_0.1.csv***
+
+---
+
+Another example, you run this command, that is mentioned in below.
+
+```
+    python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
+```
+
+End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.05.csv*** and ***test-resultsGraph_Own_0.05.csv***
+
+
+
+
+
 
 &nbsp;
 
