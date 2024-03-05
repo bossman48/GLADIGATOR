@@ -180,7 +180,7 @@ maxEdgeNumber = len(dataFromGraphFile.edge_index[0])
 
 #init ratios
 val_ratio = 0.1
-test_ratio = 0.1
+test_ratio = 0.2
 train_ratio = 1-val_ratio-test_ratio
 
 
@@ -284,7 +284,7 @@ def initVariables():
 
   #init ratios
   val_ratio = 0.1
-  test_ratio = 0.1
+  test_ratio = 0.2
   train_ratio = 1-val_ratio-test_ratio
 
 
