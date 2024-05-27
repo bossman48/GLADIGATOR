@@ -1373,6 +1373,9 @@ class Net1(torch.nn.Module):
     def decode(self, z, edge_label_index):
         return (z[edge_label_index[0]] * z[edge_label_index[1]]).sum(dim=-1)
 
+    def decodeWithoutSum(self, z, edge_label_index):
+        return (z[edge_label_index[0]] * z[edge_label_index[1]])
+
     def decode_all(self, z):
         prob_adj = z @ z.t()
         return (prob_adj > 0).nonzero(as_tuple=False).t()
@@ -1823,10 +1826,36 @@ for element in model:
         #average_precision = average_precision_score(data.edge_label.cpu().detach().numpy(), np.around(out.cpu().detach().numpy()))
         return (auc_precision_recall)
 
-    def saveTestResult(dataset,valOrTest,testResult, epoch,test_accuracy, test_f1_score, test_precision, test_recall, test_roc_auc_score,testPrAucScore, test_specifity_score):
+    @torch.no_grad()
+    def testMRRCalculation(data):
+        model.eval()
+        z = model.encode(data.x, data.edge_index)
+
+        sizeOut3 = model.decodeWithoutSum(z, data.edge_label_index).size()
+        out3 = model.decodeWithoutSum(z, data.edge_label_index).view(-1).sigmoid().view(sizeOut3)
+        #out3 = model.decodeWithoutSum(z, data.edge_label_index)
+
+        #return accuracy_score(data.edge_label.cpu().numpy(), out.cpu().numpy())
+        return mrr_score(data.edge_label.cpu().numpy(), np.around(out3.cpu().numpy()))
+
+    def mrr_score(realData,prediction):
+      sum = 0.0
       index = 0
-      resultHeader = ["Epoch ","Accuracy Score","F1-Score","Precision Score","Recall Score","Roc-Auc-Score","Pr-Auc Score","Specifity Score"]
-      resultRow = [epoch,test_accuracy, test_f1_score, test_precision, test_recall, test_roc_auc_score,testPrAucScore , test_specifity_score]
+      while(index < len(realData)):
+        indexRank = 0
+        while(indexRank < len(prediction[index])):
+          if(int(realData[index]) == int(prediction[index][indexRank])):          
+            sum += float(1/float(indexRank+1))
+            break
+          indexRank += 1
+        index+=1
+
+      return sum/float(len(realData))
+
+    def saveTestResult(dataset,valOrTest,testResult, epoch,test_accuracy, test_f1_score, test_precision, test_recall, test_roc_auc_score,testPrAucScore, test_specifity_score, test_mrr_score):
+      index = 0
+      resultHeader = ["Epoch ","Accuracy Score","F1-Score","Precision Score","Recall Score","Roc-Auc-Score","Pr-Auc Score","Specifity Score", "MRR"]
+      resultRow = [epoch,test_accuracy, test_f1_score, test_precision, test_recall, test_roc_auc_score,testPrAucScore , test_specifity_score, test_mrr_score]
       data=[]
       while(index<len(testResult)):
         tempData=[]
@@ -1894,15 +1923,18 @@ for element in model:
         test_specifity_score = testSpecificityScore(test_data)
         testPrAucScore = testPrAuch(test_data)
         valPrAucScore = testPrAuch(val_data)
+        testMRRScore = testMRRCalculation(test_data)
+        valMRRScore = testMRRCalculation(val_data)
         if(max_val_accuracy<val_accuracy):
           max_val_accuracy = val_accuracy
-          saveTestResult(test_data,"test",test_out_array, epoch,test_accuracy, (2*test_recall*test_precision)/(test_recall+test_precision), test_precision, test_recall, test_roc_auc_score, testPrAucScore,test_specifity_score)
-          saveTestResult(val_data,"val",val_out_array, epoch ,val_accuracy, (2*val_recall*val_precision)/(val_recall+val_precision), val_precision, val_recall, val_roc_auc_score, valPrAucScore,val_specifity_score)
-
+          saveTestResult(test_data,"test",test_out_array, epoch,test_accuracy, (2*test_recall*test_precision)/(test_recall+test_precision), test_precision, test_recall, test_roc_auc_score, testPrAucScore,test_specifity_score, testMRRScore)
+          saveTestResult(val_data,"val",val_out_array, epoch ,val_accuracy, (2*val_recall*val_precision)/(val_recall+val_precision), val_precision, val_recall, val_roc_auc_score, valPrAucScore,val_specifity_score, valMRRScore)
+          torch.save(model, datasetName+".pth")
+          
         if epoch % 10 == 0:
           print("Epoch : ",epoch,
-              "\n Val Accuracy: ", val_accuracy, "Val F1: ", (2*val_recall*val_precision)/(val_recall+val_precision), " Val Precision: ",val_precision, "Val Recall : ",val_recall, "Val Roc_Auc : ",val_roc_auc_score, "Val Pr_Auc : ",valPrAucScore," Val Specifity : ",val_specifity_score,
-              "\n Test Accuracy: ", test_accuracy,  " Test F1: ", (2*test_recall*test_precision)/(test_recall+test_precision), " Test Precison: ",test_precision, " Test Recall: ", test_recall,  "Test Roc_Auc : ",test_roc_auc_score, "Test Pr_Auc : ",testPrAucScore ," Test Specifity : ",test_specifity_score)
+              "\n Val Accuracy: ", val_accuracy, "Val F1: ", (2*val_recall*val_precision)/(val_recall+val_precision), " Val Precision: ",val_precision, "Val Recall : ",val_recall, "Val Roc_Auc : ",val_roc_auc_score, "Val Pr_Auc : ",valPrAucScore," Val Specifity : ",val_specifity_score, " Val MRR Score: ", valMRRScore,
+              "\n Test Accuracy: ", test_accuracy,  " Test F1: ", (2*test_recall*test_precision)/(test_recall+test_precision), " Test Precison: ",test_precision, " Test Recall: ", test_recall,  "Test Roc_Auc : ",test_roc_auc_score, "Test Pr_Auc : ",testPrAucScore ," Test Specifity : ",test_specifity_score, " Test MRR Score: ", testMRRScore)
       except Exception as exc:
         print("this eopch has a problem, exc: ", exc)
 
