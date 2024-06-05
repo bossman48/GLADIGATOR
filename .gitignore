@@ -9,3 +9,5 @@ graph-files/*.pt
 source-files/AllGeneDiseaseLinkedData40.csv
 source-files/BIOGRID-ORGANISM-Homo_sapiens-4.4.217.tab.txt
 *.drawio
+graph-files/Graph_Own_0.5_comparison.pt.7z
+source-files/generated-negative-egdes/generatedNegativeEdges_Graph_Own_0.5_comparison.pt
