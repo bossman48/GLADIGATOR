@@ -202,9 +202,12 @@ import re
 import numpy as np
 from transformers import AutoTokenizer, AutoModel
 
-tokenizer = AutoTokenizer.from_pretrained("dmis-lab/biobert-v1.1")
+#tokenizer = AutoTokenizer.from_pretrained("dmis-lab/biobert-v1.1")
 
-model = AutoModel.from_pretrained("dmis-lab/biobert-v1.1")
+#model = AutoModel.from_pretrained("dmis-lab/biobert-v1.1")
+
+model = AutoModel.from_pretrained("../../source-files/")
+tokenizer = AutoTokenizer.from_pretrained("../../source-files/")
 
 """#diseaseDescriptionEmbedding"""
 
