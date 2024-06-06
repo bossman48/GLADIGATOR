@@ -1898,7 +1898,8 @@ for element in model:
           max_val_accuracy = val_accuracy
           saveTestResult(test_data,"test",test_out_array, epoch,test_accuracy, (2*test_recall*test_precision)/(test_recall+test_precision), test_precision, test_recall, test_roc_auc_score, testPrAucScore,test_specifity_score)
           saveTestResult(val_data,"val",val_out_array, epoch ,val_accuracy, (2*val_recall*val_precision)/(val_recall+val_precision), val_precision, val_recall, val_roc_auc_score, valPrAucScore,val_specifity_score)
-          torch.save(model, datasetName+".pth")
+          torch.save(model, datasetName+"_model.pth")
+          torch.save(model.state_dict(), datasetName+"_state_dict.pth")
           
         if epoch % 10 == 0:
           print("Epoch : ",epoch,
