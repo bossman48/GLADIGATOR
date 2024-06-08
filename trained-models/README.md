@@ -29,3 +29,17 @@ For example, you want to make prediction between gene AGER and disease C1518922 
 :warning:
 
 ***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
+
+:warning:
+
+Your config.py file must be inside of the  ./source-folder.
+
+:warning:
+
+Inside of the config.py file is mention in below
+
+	config = {
+		"email":"example@example.com",
+		"password":"example",
+		"apikey":"example-apikey"
+	}
