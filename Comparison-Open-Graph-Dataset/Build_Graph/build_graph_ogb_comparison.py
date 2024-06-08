@@ -252,12 +252,18 @@ import re
 import numpy as np
 from transformers import AutoTokenizer, AutoModel
 
-#tokenizer = AutoTokenizer.from_pretrained("dmis-lab/biobert-v1.1")
+try:
+  model = AutoModel.from_pretrained("../source-files/")
+  tokenizer = AutoTokenizer.from_pretrained("../source-files/")
+except Exception as exc:
+  print("Biobert model did not found in the source-files path. Therefore, Biobert pretrained model will be downloaded from internet.")
+  tokenizer = AutoTokenizer.from_pretrained("dmis-lab/biobert-v1.1")
 
-#model = AutoModel.from_pretrained("dmis-lab/biobert-v1.1")
+  model = AutoModel.from_pretrained("dmis-lab/biobert-v1.1")
 
-model = AutoModel.from_pretrained("../../source-files/")
-tokenizer = AutoTokenizer.from_pretrained("../../source-files/")
+  print("Biobert pretrained model download process completed. Saving process will be run.")
+  _ = model.save_pretrained("../../source-files/")
+  _ = tokenizer.save_pretrained("../../source-files/")
 
 """#diseaseDescriptionEmbedding"""
 
