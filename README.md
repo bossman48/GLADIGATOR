@@ -1,6 +1,6 @@
-# GeDiLiP: Gene-Disease Link Prediction Model Using Protein Sequence and Disease Definement
+# GLADIGATOR: Graph Learning-bAsed DIsease Gene AssociaTiOn pRediction
 
-GeDiLiP (Gene-Disease Link Prediction Model) is a machine learning model that is used to predict gene-disease association.Model use protein seqeunce and disease definement. Protein sequence is vectorized by [ProtT5 Model](https://www.uniprot.org/help/downloads#embeddings:~:text=protein%20per%2Dresidue-,Homo%20sapiens,-per%2Dprotein%20per) that generated vectors saved in a file (per-protein.h5). Disase definement is vectorized by [BioBert v1.1 Model](https://huggingface.co/dmis-lab/biobert-v1.1) vectorization operation that was created by [DMIS-Lab](https://dmis.korea.ac.kr). In this project, dataset was gathered from [Disgenet (v7.0)](https://www.disgenet.org/dbinfo#:~:text=Version%20History-,May%204%2C%202020,-DisGeNET%20Database%207.0). In Disgenet(v7.0), contains 1,134,942 gene-disease associations (GDAs), between 21,671 genes and 30,170 diseases, disorders, traits, and clinical or abnormal human phenotypes.
+GLADIGATOR: (Graph Learning-bAsed DIsease Gene AssociaTiOn pRediction) is a machine learning model that is used to predict gene-disease association.Model use protein seqeunce and disease definement. Protein sequence is vectorized by [ProtT5 Model](https://www.uniprot.org/help/downloads#embeddings:~:text=protein%20per%2Dresidue-,Homo%20sapiens,-per%2Dprotein%20per) that generated vectors saved in a file (per-protein.h5). Disase definement is vectorized by [BioBert v1.1 Model](https://huggingface.co/dmis-lab/biobert-v1.1) vectorization operation that was created by [DMIS-Lab](https://dmis.korea.ac.kr). In this project, dataset was gathered from [Disgenet (v7.0)](https://www.disgenet.org/dbinfo#:~:text=Version%20History-,May%204%2C%202020,-DisGeNET%20Database%207.0). In Disgenet(v7.0), contains 1,134,942 gene-disease associations (GDAs), between 21,671 genes and 30,170 diseases, disorders, traits, and clinical or abnormal human phenotypes.
 In addition, gene-gene associations and disease-disease associations are added. Gene-gene associations were downloaded from [BioGrid v4.4.217](https://downloads.thebiogrid.org/File/BioGRID/Release-Archive/BIOGRID-4.4.217/BIOGRID-ORGANISM-4.4.217.tab.zip). In this project, only homo-sapiens' genes were used. Disease-disesae associations were gathered from DisGeNet via [API](https://www.disgenet.org/api/#/DDA:~:text=org/dbinfo%23section45-,Disease%2DDisease%20Associations%20(DDAs),-The%20DDAs%20service). In this model, train/validation/test split is splited based on [Uniref50](https://www.uniprot.org/help/uniref#:~:text=e.g.%C2%A0%22UniRef90_P99999%22.-,UniRef50,-UniRef50%20is%20generated)
 
 
@@ -30,13 +30,13 @@ In addition, gene-gene associations and disease-disease associations are added. 
 
 &nbsp;
 
-## Descriptions of folders and files in the GeDiLiP repository 
+## Descriptions of folders and files in the GALDIGATOR repository 
 
 :warning: :warning:
 
-1. GeDiLiP on customized dataset is stored in **Main-Project** folder. 
-2. GeDiLiP on SkipGNN's dataset(DisGeNet-curated) is stored in **Comparison-SkipGNN** folder. 
-3. GeDiLiP on OGB's dataset(ogbl-biokg) is stored in **Comparison-SkipGNN** folder. 
+1. GALDIGATOR on customized dataset is stored in **Main-Project** folder. 
+2. GALDIGATOR on SkipGNN's dataset(DisGeNet-curated) is stored in **Comparison-SkipGNN** folder. 
+3. GALDIGATOR on OGB's dataset(ogbl-biokg) is stored in **Comparison-SkipGNN** folder. 
 
 There is a readme file inside of the every project folder.
 
@@ -44,9 +44,9 @@ There is a project diagrams [file](master-project-diagrams.drawio) that is built
 
 &nbsp;
 
-## GeDiLiP Usage
+## GALDIGATOR Usage
 
-This section intends to guide the users on how to run GeDiLiP. 
+This section intends to guide the users on how to run GALDIGATOR. 
 
 :warning: :warning: 
 
@@ -156,18 +156,13 @@ Another example, you want build a graph that gene-disease score is equal and mor
 ## **Run-Model**
 ------------------------
 
-In this part, our deep learning model is trained and tested. Steps' of the train/test process is mentioned in below.
+In this part, our deep learning model is trained and tested. Steps' of the train/test process and the model architecture are mentioned in below.
 
 <p align="center"> 
-    <img src="Main-Project/Run-Model/run-model.png">
+    <img src="Main-Project/Run-Model/main-algorithm.png">
 </p>
 
-### Machine Learning Model
 
-In this part, our machine learning model's structure mentioned in below.
-<p align="center"> 
-    <img src="Main-Project/Run-Model/NN-Structure.png">
-</p>
 
 ### Input Parameter
 Only input parameter is a path of the graph file that is a dataset model is trained/tested on this dataset.
@@ -229,6 +224,21 @@ Another example, you run this command, that is mentioned in below.
 End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.05.csv*** and ***test-resultsGraph_Own_0.05.csv***
 
 
+
+GLADIGATOR projects contains 4 main parts. These parts are explained in below.
+
+    
+    1. Main-Project: 
+    In this part, proposed method explained detailly. We use DisGeNet API Data Source with GDA Score limitations. Also, we use BioGrid datas. 
+
+    2. Comparison-SkipGNN: 
+    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used DisGeNet Curated dataset. Also, we use BioGrid datas.
+
+    3. Comparison-Open-Graph-Dataset: 
+    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used OGB(ogbl-biokg) dataset. Also, we use BioGrid datas. 
+
+    4. Trained-Models: 
+    In this part, trained models of the proposed methods are saved. If somebody want to make association prediction between genes and diseases, they can run MakePrediction.py script.  
 
 
 

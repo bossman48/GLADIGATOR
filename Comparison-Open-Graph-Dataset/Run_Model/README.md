@@ -1,16 +1,11 @@
 # Run-Model
 
-In this part, our deep learning model is trained and tested. Steps' of the train/test process is mentioned in below.
+In this part, our deep learning model is trained and tested. Steps' of the train/test process and the model architecture are mentioned in below.
 
 <p align="center"> 
-    <img src="run-model.png">
+    <img src="main-algorithm.png">
 </p>
 
-## Machine Learning Model
-In this part, our machine learning model's structure mentioned in below.
-<p align="center"> 
-    <img src="NN-Structure.png">
-</p>
 
 ## Input Parameter
 Only input parameter is a path of the graph file that is a dataset model is trained/tested on this dataset.
