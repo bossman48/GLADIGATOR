@@ -82,7 +82,7 @@ Email and password is used to enroll to the Disgenet, you can research in this [
 
 :warning:
 
-Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder.
+Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder and ./source-folder.
 
 :warning:
 
