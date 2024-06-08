@@ -34,13 +34,23 @@ In addition, gene-gene associations and disease-disease associations are added. 
 
 :warning: :warning:
 
-1. GALDIGATOR on customized dataset is stored in **Main-Project** folder. 
-2. GALDIGATOR on SkipGNN's dataset(DisGeNet-curated) is stored in **Comparison-SkipGNN** folder. 
-3. GALDIGATOR on OGB's dataset(ogbl-biokg) is stored in **Comparison-SkipGNN** folder. 
+
+GLADIGATOR projects contains 4 main parts. These parts are explained in below.
+
+    
+    1. Main-Project: 
+    In this part, proposed method explained detailly. We use DisGeNet API Data Source with GDA Score limitations. Also, we use BioGrid datas. 
+
+    2. Comparison-SkipGNN: 
+    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used DisGeNet Curated dataset. Also, we use BioGrid datas.
+
+    3. Comparison-Open-Graph-Dataset: 
+    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used OGB(ogbl-biokg) dataset. Also, we use BioGrid datas. 
+
+    4. Trained-Models: 
+    In this part, trained models of the proposed methods are saved. If somebody want to make association prediction between genes and diseases, they can run MakePrediction.py script.  
 
 There is a readme file inside of the every project folder.
-
-There is a project diagrams [file](master-project-diagrams.drawio) that is built in drawio.  
 
 &nbsp;
 
@@ -225,20 +235,6 @@ End of the train process, the best validation and test result are store in ***va
 
 
 
-GLADIGATOR projects contains 4 main parts. These parts are explained in below.
-
-    
-    1. Main-Project: 
-    In this part, proposed method explained detailly. We use DisGeNet API Data Source with GDA Score limitations. Also, we use BioGrid datas. 
-
-    2. Comparison-SkipGNN: 
-    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used DisGeNet Curated dataset. Also, we use BioGrid datas.
-
-    3. Comparison-Open-Graph-Dataset: 
-    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used OGB(ogbl-biokg) dataset. Also, we use BioGrid datas. 
-
-    4. Trained-Models: 
-    In this part, trained models of the proposed methods are saved. If somebody want to make association prediction between genes and diseases, they can run MakePrediction.py script.  
 
 
 
