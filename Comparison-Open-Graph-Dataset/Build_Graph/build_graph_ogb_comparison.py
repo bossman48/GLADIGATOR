@@ -253,8 +253,8 @@ import numpy as np
 from transformers import AutoTokenizer, AutoModel
 
 try:
-  model = AutoModel.from_pretrained("../source-files/")
-  tokenizer = AutoTokenizer.from_pretrained("../source-files/")
+  model = AutoModel.from_pretrained("../../source-files/")
+  tokenizer = AutoTokenizer.from_pretrained("../../source-files/")
 except Exception as exc:
   print("Biobert model did not found in the source-files path. Therefore, Biobert pretrained model will be downloaded from internet.")
   tokenizer = AutoTokenizer.from_pretrained("dmis-lab/biobert-v1.1")

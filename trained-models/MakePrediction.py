@@ -152,8 +152,8 @@ except Exception as exc:
   model = AutoModel.from_pretrained("dmis-lab/biobert-v1.1")
 
   print("Biobert pretrained model download process completed. Saving process will be run.")
-  _ = model.save_pretrained("../../source-files/")
-  _ = tokenizer.save_pretrained("../../source-files/")
+  _ = model.save_pretrained("../source-files/")
+  _ = tokenizer.save_pretrained("../source-files/")
 
 
 """#diseaseDescriptionEmbedding"""
