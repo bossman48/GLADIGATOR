@@ -32,7 +32,7 @@ For example, you want to make prediction between gene AGER and disease C1518922 
 
 :warning:
 
-Your config.py file must be inside of the  ./source-folder.
+Your config.py file must be inside of the this folder.
 
 :warning:
 

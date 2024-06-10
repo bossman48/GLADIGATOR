@@ -4,12 +4,7 @@ import torch
 #print("François: isUTFCeckCompleted : ", isUTFCeckCompleted("François"))
 # importing the requests library
 import requests
-
-# importing sys
 import sys
- 
-# adding Folder_2/subfolder to the system path
-sys.path.insert(0, '../source-files/')
 
 pretrainedModelPath = sys.argv[1]
 geneID = sys.argv[2]
@@ -61,10 +56,10 @@ def getUniprotIDFromGene(gene:str):
 
 # Disease
 
-from config import *
+import config
 
 #get apikey
-apikey = config.get("apikey")
+apikey = config.config.get("apikey")
 
 
 
