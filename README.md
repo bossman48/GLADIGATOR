@@ -235,7 +235,18 @@ End of the train process, the best validation and test result are store in ***va
 
 
 
+## Make Prediction With Trained Models 
 
+For example, you want to make prediction between gene PRPH2 and disease C0016529 via using Graph_Own_0.5_model.pth trained model. You should call this command
+```
+    python3 MakePrediction.py Graph_Own_0.5_model.pth PRPH2 C0016529
+```
+
+For example, you want to make prediction between gene AGER and disease C1518922 via using Graph_Own_0.05_model.pth trained model. You should call this command
+
+```
+    python3 MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
+```
 
 
 
