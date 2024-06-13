@@ -58,9 +58,9 @@ There is a readme file inside of the every project folder.
 
 This section intends to guide the users on how to run GALDIGATOR. 
 
-:warning: :warning: 
+:warning: :warning: :warning: 
 
-First of all, please readme files inside **source-files** and **graph-files** folders. File unzip operations are required. File unzip operations' command is written in readme files in **source-files** and **graph-files** folders.
+First of all, please read readme files inside **source-files** and **graph-files** folders. File **UNZIP** operations are required. File **UNZIP** operations' command is written in readme files in **source-files** and **graph-files** folders.
 
 # Proposed Project Steps:
 
@@ -78,11 +78,16 @@ Before run this programs, you must build config.py file that store required info
 
 Apikey is required to access [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server. Apikey is used to gather data from [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server, you can research in this [documentation](https://documentation.uts.nlm.nih.gov/rest/search/)
 
-Email and password is used to enroll to the Disgenet, you can research in this [documentation](https://www.disgenet.org/api/).
+Email and password is used to enroll to the Disgenet, you can research in this [documentation](https://www.disgenet.org/api/). 
 
 :warning:
 
-Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder and ./trained-models.
+DisGeNet API is not available at this moment. Please use source files in source-files folder. 
+
+
+:warning:
+
+Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder.
 
 :warning:
 
@@ -247,6 +252,23 @@ For example, you want to make prediction between gene AGER and disease C1518922 
 ```
     python3 MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
 ```
+
+:warning:
+
+Your config.py file must be inside of the ./trained-models.
+
+:warning:
+
+Inside of the config.py file is mention in below
+
+	config = {
+		"email":"example@example.com",
+		"password":"example",
+		"apikey":"example-apikey"
+	}
+
+
+:warning:
 
 
 

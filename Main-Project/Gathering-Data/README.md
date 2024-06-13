@@ -1,6 +1,9 @@
 # Gathering-Data
 This part is used to gather information from UMLS and DisGeNet via using API. 
 
+:warning:
+
+DisGeNet API is not available at this moment. Please use source files in source-files folder. 
 
 :warning:
 
