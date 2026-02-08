@@ -130,8 +130,7 @@ print(diseaseID+ " descripton is :" , getDiseaseDescription(diseaseID))
 
 # Generate Disease Embeddings
 
-import tensorflow as tf
-import re
+
 import numpy as np
 from transformers import AutoTokenizer, AutoModel
 """
