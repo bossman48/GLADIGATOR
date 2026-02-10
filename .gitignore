@@ -19,3 +19,5 @@ source-files/special_tokens_map.json
 source-files/tokenizer.json
 source-files/tokenizer_config.json
 source-files/vocab.txt
+trained-models/__pycache__/
+*/__pycache__/
