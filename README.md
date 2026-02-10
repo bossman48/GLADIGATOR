@@ -1,7 +1,17 @@
-# GLADIGATOR: Graph Learning-bAsed DIsease Gene AssociaTiOn pRediction
+# GLADIGATOR: Graph Learning-based Disease Gene Association Prediction
 
-GLADIGATOR: (Graph Learning-bAsed DIsease Gene AssociaTiOn pRediction) is a machine learning model that is used to predict gene-disease association.Model use protein seqeunce and disease definement. Protein sequence is vectorized by [ProtT5 Model](https://www.uniprot.org/help/downloads#embeddings:~:text=protein%20per%2Dresidue-,Homo%20sapiens,-per%2Dprotein%20per) that generated vectors saved in a file (per-protein.h5). Disase definement is vectorized by [BioBert v1.1 Model](https://huggingface.co/dmis-lab/biobert-v1.1) vectorization operation that was created by [DMIS-Lab](https://dmis.korea.ac.kr). In this project, dataset was gathered from [Disgenet (v7.0)](https://www.disgenet.org/dbinfo#:~:text=Version%20History-,May%204%2C%202020,-DisGeNET%20Database%207.0). In Disgenet(v7.0), contains 1,134,942 gene-disease associations (GDAs), between 21,671 genes and 30,170 diseases, disorders, traits, and clinical or abnormal human phenotypes.
-In addition, gene-gene associations and disease-disease associations are added. Gene-gene associations were downloaded from [BioGrid v4.4.217](https://downloads.thebiogrid.org/File/BioGRID/Release-Archive/BIOGRID-4.4.217/BIOGRID-ORGANISM-4.4.217.tab.zip). In this project, only homo-sapiens' genes were used. Disease-disesae associations were gathered from DisGeNet via [API](https://www.disgenet.org/api/#/DDA:~:text=org/dbinfo%23section45-,Disease%2DDisease%20Associations%20(DDAs),-The%20DDAs%20service). In this model, train/validation/test split is splited based on [Uniref50](https://www.uniprot.org/help/uniref#:~:text=e.g.%C2%A0%22UniRef90_P99999%22.-,UniRef50,-UniRef50%20is%20generated)
+GLADIGATOR is a machine learning model that predicts gene-disease associations using protein sequences and disease definitions. The model uses:
+
+- **Protein sequences**: Vectorized using the [ProtT5 Model](https://www.uniprot.org/help/downloads#embeddings:~:text=protein%20per%2Dresidue-,Homo%20sapiens,-per%2Dprotein%20per), with vectors saved in `per-protein.h5`
+- **Disease definitions**: Vectorized using the [BioBert v1.1 Model](https://huggingface.co/dmis-lab/biobert-v1.1) from [DMIS-Lab](https://dmis.korea.ac.kr)
+
+The project uses data from [DisGeNET (v7.0)](https://www.disgenet.org/dbinfo#:~:text=Version%20History-,May%204%2C%202020,-DisGeNET%20Database%207.0), which contains 1,134,942 gene-disease associations (GDAs) between 21,671 genes and 30,170 diseases, disorders, traits, and clinical or abnormal human phenotypes.
+
+Additional data includes:
+- **Gene-gene associations**: Downloaded from [BioGrid v4.4.217](https://downloads.thebiogrid.org/File/BioGRID/Release-Archive/BIOGRID-4.4.217/BIOGRID-ORGANISM-4.4.217.tab.zip)
+- **Disease-disease associations**: Gathered from DisGeNET via [API](https://www.disgenet.org/api/#/DDA:~:text=org/dbinfo%23section45-,Disease%2DDisease%20Associations%20(DDAs),-The%20DDAs%20service)
+
+The model uses train/validation/test splits based on [UniRef50](https://www.uniprot.org/help/uniref#:~:text=e.g.%C2%A0%22UniRef90_P99999%22.-,UniRef50,-UniRef50%20is%20generated)
 
 
 
@@ -10,61 +20,138 @@ In addition, gene-gene associations and disease-disease associations are added. 
 
 ## Development and Dependencies
 
-### This project can be run every operating system. However, ***Ubuntu 22.04.3*** is recommanded.
-- Python 3
+### Supported Platforms
+This project can run on any operating system, but **Ubuntu 22.04.3** is recommended.
+
+### Prerequisites
+- Python 3.11
 - Pip3
-- Clone repository
-- Install dependencies
+- Virtual environment (venv)
+- Git (for cloning the repository)
 
-    - all test run on CPU, if you want to run other devices, you should change some packages.
-    - in Ubuntu (Recommended) or MacOS, 
-    ```
-        pip3 install -r requirementsUbuntu.txt
-    ```
-    - in Windows,
-    ```
-        pip3 install -r requirements.txt
-    ```
-    
-    
+### Installation
+1. Clone the repository:
+2. Create and activate a virtual environment:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-&nbsp;
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Descriptions of folders and files in the GALDIGATOR repository 
-
-:warning: :warning:
-
-
-GLADIGATOR projects contains 4 main parts. These parts are explained in below.
+**Note**: All tests run on CPU. To use other devices (GPU/TPU), you'll need to modify some packages in `requirements.txt`.
 
     
-    1. Main-Project: 
-    In this part, proposed method explained detailly. We use DisGeNet API Data Source with GDA Score limitations. Also, we use BioGrid datas. 
+    
 
-    2. Comparison-SkipGNN: 
-    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used DisGeNet Curated dataset. Also, we use BioGrid datas.
+## Project Structure
 
-    3. Comparison-Open-Graph-Dataset: 
-    In this part, proposed method explained detailly. We give brief information about method comparison between GLADIGATOR and other methods that are used OGB(ogbl-biokg) dataset. Also, we use BioGrid datas. 
+The GLADIGATOR repository contains 4 main parts:
 
-    4. Trained-Models: 
-    In this part, trained models of the proposed methods are saved. If somebody want to make association prediction between genes and diseases, they can run MakePrediction.py script.  
+### 1. Main-Project
+This is the core project containing the proposed method. It uses DisGeNET API data source with GDA score limitations and BioGrid data.
 
-There is a readme file inside of the every project folder.
+### 2. Comparison-SkipGNN
+This project compares GLADIGATOR with other methods using the DisGeNET curated dataset. It also uses BioGrid data.
 
-&nbsp;
+### 3. Comparison-Open-Graph-Dataset
+This project compares GLADIGATOR with other methods using the OGB (ogbl-biokg) dataset. It also uses BioGrid data.
 
-## GALDIGATOR Usage
+### 4. Make-Prediction
+This contains trained models of the proposed methods. Users can make gene-disease association predictions by running `MakePrediction.py`.
 
-This section intends to guide the users on how to run GALDIGATOR. 
+Each project folder contains its own README file with detailed instructions.
 
-:warning: :warning: :warning: 
+## Usage
 
-First of all, please read readme files inside **source-files** and **graph-files** folders. File **UNZIP** operations are required. File **UNZIP** operations' command is written in readme files in **source-files** and **graph-files** folders.
+### Prerequisites
+Before running the project, please:
+1. Read the README files in the **source-files** and **graph-files** folders
+2. Perform the required **UNZIP** operations (commands are provided in those README files)
 
-# Proposed Project Steps:
+### Project Steps
+The proposed method consists of the following steps:
 
-The proposed method is mentioned in below. Also inside of the Main-Project folder, proposed method's steps are mentioned with seperated folder.
+#### 1. Gathering-Data
+This step gathers information from UMLS and DisGeNET using APIs.
+
+**Important**: Before running the programs, you must create a `config.py` file with the required API credentials:
+
+```python
+config = {
+    "email": "example@example.com",
+    "password": "example",
+    "apikey": "example-apikey"
+}
+```
+
+**Note**: The DisGeNET API is currently unavailable. Please use the source files in the `source-files` folder instead.
+
+**Commands**:
+```bash
+# To gather DisGeNET information
+python3 gather_gene_disease_information.py
+
+# To gather disease information from UMLS
+python3 gather_disease_data_from_umls.py
+```
+
+#### 2. Build-Graph
+This step builds customizable graph files from gathered sources (DisGeNET, BioGrid, UniProt).
+
+**Input Parameter**: Gene-disease score threshold
+
+**Example Usages**:
+```bash
+# Build graph with gene-disease score >= 0.5
+python3 build_graph.py 0.5
+
+# Build graph with gene-disease score >= 0.1
+python3 build_graph.py 0.1
+
+# Build graph with gene-disease score >= 0.05
+python3 build_graph.py 0.05
+```
+
+#### 3. Run-Model
+This step trains and tests the deep learning model using the built graph files.
+
+**Input Parameter**: Path to the graph file
+
+**Example Usages**:
+```bash
+# Run model with graph file for score >= 0.5
+python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
+
+# Run model with graph file for score >= 0.1
+python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
+
+# Run model with graph file for score >= 0.05
+python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
+```
+
+**Output Files**: After training, the best validation and test results are stored in CSV files:
+- `val-resultsGraph_Own_0.5.csv` and `test-resultsGraph_Own_0.5.csv`
+- `val-resultsGraph_Own_0.1.csv` and `test-resultsGraph_Own_0.1.csv`
+- `val-resultsGraph_Own_0.05.csv` and `test-resultsGraph_Own_0.05.csv`
+
+#### 4. Make Prediction
+Use trained models to make predictions between genes and diseases.
+
+**Example**:
+```bash
+# Predict association between gene PRPH2 and disease C0016529
+python3 MakePrediction.py Graph_Own_0.5_model.pth PRPH2 C0016529
+
+# Predict association between gene AGER and disease C1518922
+python3 MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
+```
+
+**Note**: The `config.py` file must be in the `./Make-Prediction` directory with the same format as above.
+
 
 
 ## **Gathering-Data**
@@ -275,6 +362,7 @@ Inside of the config.py file is mention in below
 &nbsp;
 
 ## License
+
 Copyright (C) 2023 HUBioDataLab
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
