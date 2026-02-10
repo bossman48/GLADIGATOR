@@ -282,9 +282,6 @@ if(graphConstructed):
   from torch_geometric.nn import GCNConv
   from torch_geometric.utils import negative_sampling
   from torch.utils.data import Dataset, DataLoader,TensorDataset,random_split,SubsetRandomSampler, ConcatDataset
-  import torchvision
-  from torchvision import datasets,transforms
-  import torchvision.transforms as transforms
   from torch_geometric.utils import train_test_split_edges
   from sklearn.metrics import roc_auc_score
   from sklearn.metrics import average_precision_score, precision_recall_curve
@@ -326,7 +323,7 @@ if(graphConstructed):
 
   if(geneProteinSequenceFound and diseaseContextFound):
       model = Net1(1792,112,28)
-      model = torch.load(pretrainedModelPath)
+      model = torch.load(pretrainedModelPath, weights_only=False)
       
       #model.load_state_dict(torch.load(pretrainedModelPath))
       model.eval()
