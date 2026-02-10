@@ -197,7 +197,6 @@ print(type(vectorizedTemp2[0]))
 
 #!pip install -q transformers
 
-import tensorflow as tf
 import re
 import numpy as np
 from transformers import AutoTokenizer, AutoModel

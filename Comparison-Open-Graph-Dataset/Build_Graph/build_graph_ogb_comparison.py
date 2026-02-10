@@ -247,7 +247,6 @@ print(getProteinEmbeddingFromOpenGraphEntryName("P04217"))
 
 #!pip install -q transformers
 
-import tensorflow as tf
 import re
 import numpy as np
 from transformers import AutoTokenizer, AutoModel

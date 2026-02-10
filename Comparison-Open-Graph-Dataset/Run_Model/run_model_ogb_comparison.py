@@ -71,7 +71,7 @@ datasetName = sys.argv[1][datasetNameStartIndex:datasetNameEndIndex]
 print("datasetName : ", datasetName)
 
 
-dataFromGraphFile = torch.load(sys.argv[1])
+dataFromGraphFile = torch.load(sys.argv[1], weights_only=False)
 print("Graph file  : ",dataFromGraphFile)
 
 
@@ -895,7 +895,7 @@ class KZCLinkSplit(BaseTransform):
 
           print("Negative edges are created")
         else:
-          neg_edge_index = torch.load(path)
+          neg_edge_index = torch.load(path, weights_only=False)
           print("Negative edges are loaded")
         # Create labels:
         self._create_label(
@@ -1268,9 +1268,6 @@ class KZCLinkSplit(BaseTransform):
 """
 
 dataFromGraphFile.x = dataFromGraphFile.x.float()
-import torchvision
-from torchvision import datasets,transforms
-import torchvision.transforms as transforms
 
 initVariables()
 getNumberOfEdgesBetweenDiseaseGene()
@@ -1309,9 +1306,6 @@ from torch_geometric.datasets import Planetoid
 from torch_geometric.nn import GCNConv
 from torch_geometric.utils import negative_sampling
 from torch.utils.data import Dataset, DataLoader,TensorDataset,random_split,SubsetRandomSampler, ConcatDataset
-import torchvision
-from torchvision import datasets,transforms
-import torchvision.transforms as transforms
 from torch_geometric.utils import train_test_split_edges
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import average_precision_score, precision_recall_curve
