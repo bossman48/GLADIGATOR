@@ -30,7 +30,6 @@ This component trains and tests GLADIGATOR using the built graph files, then com
 
 
 **Comparison Metrics:**
-- OGB evaluation metrics (hits@10, hits@50, mrr)
 - AUC-ROC
 - Precision
 - Recall
