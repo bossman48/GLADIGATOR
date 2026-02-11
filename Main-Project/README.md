@@ -14,13 +14,13 @@ This component builds customizable graph files from gathered sources including D
 **Usage:**
 ```bash
 # Build graph with gene-disease score >= 0.5
-python3 build_graph.py 0.5
+python3 Build-Graph/build_graph.py 0.5
 
 # Build graph with gene-disease score >= 0.1
-python3 build_graph.py 0.1
+python3 Build-Graph/build_graph.py 0.1
 
 # Build graph with gene-disease score >= 0.05
-python3 build_graph.py 0.05
+python3 Build-Graph/build_graph.py 0.05
 ```
 
 ### 2. Gathering-Data
@@ -47,10 +47,10 @@ config = {
 **Commands:**
 ```bash
 # To gather DisGeNET information
-python3 gather_gene_disease_information.py
+python3 Gathering-Data/gather_gene_disease_information.py
 
 # To gather disease information from UMLS
-python3 gather_disease_data_from_umls.py
+python3 Gathering-Data/gather_disease_data_from_umls.py
 ```
 
 ### 3. Run-Model
@@ -65,13 +65,13 @@ The model uses a graph neural network architecture with:
 **Usage:**
 ```bash
 # Run model with graph file for score >= 0.5
-python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
+python3 Run-Model/run_model.py "../../graph-files/Graph_Own_0.5.pt"
 
 # Run model with graph file for score >= 0.1
-python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
+python3 Run-Model/run_model.py "../../graph-files/Graph_Own_0.1.pt"
 
 # Run model with graph file for score >= 0.05
-python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
+python3 Run-Model/run_model.py "../../graph-files/Graph_Own_0.05.pt"
 ```
 
 **Output Files**: After training, the best validation and test results are stored in CSV files:

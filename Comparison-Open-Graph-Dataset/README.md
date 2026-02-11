@@ -19,10 +19,10 @@ This component builds graph files based on the OGB ***ogbl-biokg*** dataset, enh
 **Usage:**
 ```bash
 # Build graph with default parameters
-python3 build_graph_ogb_comparison.py
+python3 Build_Graph/build_graph_ogb_comparison.py
 
 # Build graph with custom parameters (if available)
-python3 build_graph_ogb_comparison.py --param value
+python3 Build_Graph/build_graph_ogb_comparison.py --param value
 ```
 
 ### 2. Run-Model
@@ -39,10 +39,10 @@ This component trains and tests GLADIGATOR using the built graph files, then com
 **Usage:**
 ```bash
 # Run model with default graph file
-python3 run_model_ogb_comparison.py
+python3 Run_Model/run_model_ogb_comparison.py
 
 # Run model with specific graph file
-python3 run_model_ogb_comparison.py --graph-file path/to/graph.pt
+python3 Run_Model/run_model_ogb_comparison.py --graph-file path/to/graph.pt
 ```
 
 ### Project Structure
@@ -60,14 +60,6 @@ Comparison-Open-Graph-Dataset/
 └── README.md                          # Main project documentation
 ```
 
-**Usage:**
-```bash
-# Run model with default graph file
-python3 run_model_ogb_comparison.py
-
-# Run model with specific graph file
-python3 run_model_ogb_comparison.py --graph-file path/to/graph.pt
-```
 
 ### Project Structure
 ```

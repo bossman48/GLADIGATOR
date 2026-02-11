@@ -19,10 +19,10 @@ This component builds graph files based on the DisGeNET curated dataset, enhance
 **Usage:**
 ```bash
 # Build graph with default parameters
-python3 build_graph_skipgnn_comparison.py
+python3 Build_Graph/build_graph_skipgnn_comparison.py
 
 # Build graph with custom parameters (if available)
-python3 build_graph_skipgnn_comparison.py --param value
+python3 Build_Graph/build_graph_skipgnn_comparison.py --param value
 ```
 
 ### 2. Run-Model
@@ -34,14 +34,7 @@ This component trains and tests GLADIGATOR using the built graph files, then com
 - Recall
 - F1-score
 
-**Usage:**
-```bash
-# Run model with default graph file
-python3 run_model_skipgnn_comparison.py
 
-# Run model with specific graph file
-python3 run_model_skipgnn_comparison.py --graph-file path/to/graph.pt
-```
 
 ### Project Structure
 ```
@@ -59,13 +52,6 @@ Comparison-SkipGNN/
 ```
 
 **Usage:**
-```bash
-# Run model with default graph file
-python3 run_model_skipgnn_comparison.py
-
-# Run model with specific graph file
-python3 run_model_skipgnn_comparison.py --graph-file path/to/graph.pt
-```
 
 ### Project Structure
 ```
