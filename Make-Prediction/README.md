@@ -7,8 +7,6 @@ In this part, our trained deep learning model is saved. If you can make predicti
 
 Your config.py file must be inside of the this folder.
 
-:warning:
-
 Inside of the config.py file is mention in below
 
 	config = {
@@ -42,8 +40,4 @@ For example, you want to make prediction between gene AGER and disease C1518922 
 ```
 
 
-
-:warning:
-
-***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
 
