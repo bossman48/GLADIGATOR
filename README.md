@@ -15,9 +15,6 @@ The model uses train/validation/test splits based on [UniRef50](https://www.unip
 
 ## Development and Dependencies
 
-### Supported Platforms
-This project can run on any operating system, but **Ubuntu 22.04.3** is recommended.
-
 ### Prerequisites
 - Python 3.11
 - Pip3
@@ -61,45 +58,6 @@ This directory contains the source data files used by the GLADIGATOR project. So
 ### 6. Graph Files
 This directory contains the graph data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
 
-## Important Notes
-
-### Unzip Files
-Before running any project, you must unzip the compressed files in the following directories:
-
-#### Source Files
-The `source-files` directory contains compressed files that need to be unzipped:
-- `AllGeneDiseaseLinkedData40.7z`
-- `BIOGRID-ORGANISM-Homo_sapiens-4.4.217.tab.txt.7z`
-
-**Unzip Commands:**
-- **Linux/Mac**: 
-  ```bash
-  sudo apt install p7zip-full
-  7z e AllGeneDiseaseLinkedData40.7z
-  7z e BIOGRID-ORGANISM-Homo_sapiens-4.4.217.tab.txt.7z
-  ```
-- **Windows**: Use 7-Zip application to extract all .7z files
-
-#### Graph Files
-The `graph-files` directory contains compressed graph files that need to be unzipped:
-- `Graph_Own_0.5.pt.7z`
-- `Graph_Own_0.05.pt.7z`
-- `Graph_Own_0.1.pt.7z`
-- `Graph_Comparison_SkipGNN.7z`
-- `Graph_Comparison_OGB.7z`
-
-**Unzip Commands:**
-- **Linux/Mac**: 
-  ```bash
-  sudo apt install p7zip-full
-  7z e Graph_Own_0.5.pt.7z
-  7z e Graph_Own_0.05.pt.7z
-  7z e Graph_Own_0.1.pt.7z
-  7z e Graph_Comparison_SkipGNN.7z
-  7z e Graph_Comparison_OGB.7z
-  ```
-- **Windows**: Use 7-Zip application to extract all .7z files
-
 ## Usage
 
 ### Prerequisites
@@ -128,10 +86,10 @@ config = {
 **Commands**:
 ```bash
 # To gather DisGeNET information
-python3 gather_gene_disease_information.py
+python3 Main-Project/Gathering-Data/gather_gene_disease_information.py
 
 # To gather disease information from UMLS
-python3 gather_disease_data_from_umls.py
+python3 Main-Project/Gathering-Data/gather_disease_data_from_umls.py
 ```
 
 #### 2. Build-Graph
@@ -142,13 +100,13 @@ This step builds customizable graph files from gathered sources (DisGeNET, BioGr
 **Example Usages**:
 ```bash
 # Build graph with gene-disease score >= 0.5
-python3 build_graph.py 0.5
+python3 Main-Project/Build-Graph/build_graph.py 0.5
 
 # Build graph with gene-disease score >= 0.1
-python3 build_graph.py 0.1
+python3 Main-Project/Build-Graph/build_graph.py 0.1
 
 # Build graph with gene-disease score >= 0.05
-python3 build_graph.py 0.05
+python3 Main-Project/Build-Graph/build_graph.py 0.05
 ```
 
 #### 3. Run-Model
@@ -159,13 +117,13 @@ This step trains and tests the deep learning model using the built graph files.
 **Example Usages**:
 ```bash
 # Run model with graph file for score >= 0.5
-python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
+python3 Main-Project/Run-Model/run_model.py "../../graph-files/Graph_Own_0.5.pt"
 
 # Run model with graph file for score >= 0.1
-python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
+python3 Main-Project/Run-Model/run_model.py "../../graph-files/Graph_Own_0.1.pt"
 
 # Run model with graph file for score >= 0.05
-python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
+python3 Main-Project/Run-Model/run_model.py "../../graph-files/Graph_Own_0.05.pt"
 ```
 
 **Output Files**: After training, the best validation and test results are stored in CSV files:
@@ -179,17 +137,17 @@ Use trained models to make predictions between genes and diseases.
 **Example**:
 ```bash
 # Predict association between gene PRPH2 and disease C0016529
-python3 MakePrediction.py Graph_Own_0.5_model.pth PRPH2 C0016529
+python3 Make-Prediction/MakePrediction.py Graph_Own_0.5_model.pth PRPH2 C0016529
 
 # Predict association between gene AGER and disease C1518922
-python3 MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
+python3 Make-Prediction/MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
 ```
 
 **Note**: The `config.py` file must be in the `./Make-Prediction` directory with the same format as above.
 
 ## License
 
-Copyright (C) 2023 HUBioDataLab
+Copyright (C) 2026 HUBioDataLab
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
