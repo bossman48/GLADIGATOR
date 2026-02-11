@@ -13,11 +13,6 @@ Additional data includes:
 
 The model uses train/validation/test splits based on [UniRef50](https://www.uniprot.org/help/uniref#:~:text=e.g.%C2%A0%22UniRef90_P99999%22.-,UniRef50,-UniRef50%20is%20generated)
 
-
-
-
-&nbsp;
-
 ## Development and Dependencies
 
 ### Supported Platforms
@@ -44,12 +39,9 @@ This project can run on any operating system, but **Ubuntu 22.04.3** is recommen
 
 **Note**: All tests run on CPU. To use other devices (GPU/TPU), you'll need to modify some packages in `requirements.txt`.
 
-    
-    
-
 ## Project Structure
 
-The GLADIGATOR repository contains 4 main parts:
+The GLADIGATOR repository contains 6 main parts:
 
 ### 1. Main-Project
 This is the core project containing the proposed method. It uses DisGeNET API data source with GDA score limitations and BioGrid data.
@@ -63,14 +55,57 @@ This project compares GLADIGATOR with other methods using the OGB (ogbl-biokg) d
 ### 4. Make-Prediction
 This contains trained models of the proposed methods. Users can make gene-disease association predictions by running `MakePrediction.py`.
 
-Each project folder contains its own README file with detailed instructions.
+### 5. Source Files
+This directory contains the source data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
+
+### 6. Graph Files
+This directory contains the graph data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
+
+## Important Notes
+
+### Unzip Files
+Before running any project, you must unzip the compressed files in the following directories:
+
+#### Source Files
+The `source-files` directory contains compressed files that need to be unzipped:
+- `AllGeneDiseaseLinkedData40.7z`
+- `BIOGRID-ORGANISM-Homo_sapiens-4.4.217.tab.txt.7z`
+
+**Unzip Commands:**
+- **Linux/Mac**: 
+  ```bash
+  sudo apt install p7zip-full
+  7z e AllGeneDiseaseLinkedData40.7z
+  7z e BIOGRID-ORGANISM-Homo_sapiens-4.4.217.tab.txt.7z
+  ```
+- **Windows**: Use 7-Zip application to extract all .7z files
+
+#### Graph Files
+The `graph-files` directory contains compressed graph files that need to be unzipped:
+- `Graph_Own_0.5.pt.7z`
+- `Graph_Own_0.05.pt.7z`
+- `Graph_Own_0.1.pt.7z`
+- `Graph_Comparison_SkipGNN.7z`
+- `Graph_Comparison_OGB.7z`
+
+**Unzip Commands:**
+- **Linux/Mac**: 
+  ```bash
+  sudo apt install p7zip-full
+  7z e Graph_Own_0.5.pt.7z
+  7z e Graph_Own_0.05.pt.7z
+  7z e Graph_Own_0.1.pt.7z
+  7z e Graph_Comparison_SkipGNN.7z
+  7z e Graph_Comparison_OGB.7z
+  ```
+- **Windows**: Use 7-Zip application to extract all .7z files
 
 ## Usage
 
 ### Prerequisites
 Before running the project, please:
 1. Read the README files in the **source-files** and **graph-files** folders
-2. Perform the required **UNZIP** operations (commands are provided in those README files)
+2. Perform the required **UNZIP** operations (commands are provided above)
 
 ### Project Steps
 The proposed method consists of the following steps:
@@ -151,215 +186,6 @@ python3 MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
 ```
 
 **Note**: The `config.py` file must be in the `./Make-Prediction` directory with the same format as above.
-
-
-
-## **Gathering-Data**
-------------------------
-This part is used to gather information from UMLS and DisGeNet via using API. 
-
-
-:warning:
-
-Before run this programs, you must build config.py file that store required information when access UMLS and DisGeNet API.
-
-Apikey is required to access [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server. Apikey is used to gather data from [UMLS](https://uts-ws.nlm.nih.gov/rest/content/) server, you can research in this [documentation](https://documentation.uts.nlm.nih.gov/rest/search/)
-
-Email and password is used to enroll to the Disgenet, you can research in this [documentation](https://www.disgenet.org/api/). 
-
-:warning:
-
-DisGeNet API is not available at this moment. Please use source files in source-files folder. 
-
-
-:warning:
-
-Your config.py file must be inside of the ./Main-Project/Gathering-Data/ folder.
-
-:warning:
-
-Inside of the config.py file is mention in below
-
-	config = {
-		"email":"example@example.com",
-		"password":"example",
-		"apikey":"example-apikey"
-	}
-
-
-:warning:
-
-
-if you want to gather DisGeNet informations, you should this command that mentioned in below.
-```
-	python3 gather_gene_disease_information.py
-```
-
----
-
-
-if you want to gather diseases informations from UMLS, you should this command that mentioned in below.
-
-```
-	python3 gather_disease_data_from_umls.py
-```
-
-
-
-:warning:
-
-***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
-
-## **Build-Graph**
-------------------------
-
-In this part, customizable graph files are built. Steps' of the build customizable graph is mentioned in below. 
-
-:warning:
-
-<p align="center"> 
-    <img src="Main-Project/Build-Graph/build-main-graph.png">
-</p>
-
-
-### Input Parameter
-
-Only input parameter is gene-disease score. 
-
-#### Example Usages
-For example, you want build a graph that gene-disease score is equal and more that 0.5, you can run this command.
-
-```
-    python3 build_graph.py 0.5
-```
-
----
-
-Another example, you want build a graph that gene-disease score is equal and more that 0.1, you can run this command.
-
-```
-    python3 build_graph.py 0.1
-```
-
----
-
-Another example, you want build a graph that gene-disease score is equal and more that 0.05, you can run this command.
-
-```
-    python3 build_graph.py 0.05
-```
-
-
-:warning:
-
-***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
-
-
-## **Run-Model**
-------------------------
-
-In this part, our deep learning model is trained and tested. Steps' of the train/test process and the model architecture are mentioned in below.
-
-<p align="center"> 
-    <img src="Main-Project/Run-Model/main-algorithm.png">
-</p>
-
-
-
-### Input Parameter
-Only input parameter is a path of the graph file that is a dataset model is trained/tested on this dataset.
-
-#### Example Usages
-For example, you want run model with min gene-disase score is 0.5, you can call this command.
-```
-    python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
-```
-
-Another example, you want run model with min gene-disase score is 0.1, you can call this command.
-
-```
-    python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
-```
-
-Another example, you want run model with min gene-disase score is 0.1, you can call this command.
-
-```
-    python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
-```
-
-
-:warning:
-
-***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
-
-## Output Files
-
-After train model operation is completed. Best validation and test result is stored in a csv file.
-
----
-
-For example, you run this command, that is mentioned in below.
-```
-    python3 run_model.py "../../graph-files/Graph_Own_0.5.pt"
-```
-
-End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.5.csv*** and ***test-resultsGraph_Own_0.5.csv***
-
----
-
-Another example, you run this command, that is mentioned in below.
-
-```
-    python3 run_model.py "../../graph-files/Graph_Own_0.1.pt"
-```
-
-End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.1.csv*** and ***test-resultsGraph_Own_0.1.csv***
-
----
-
-Another example, you run this command, that is mentioned in below.
-
-```
-    python3 run_model.py "../../graph-files/Graph_Own_0.05.pt"
-```
-
-End of the train process, the best validation and test result are store in ***val-resultsGraph_Own_0.05.csv*** and ***test-resultsGraph_Own_0.05.csv***
-
-
-
-## Make Prediction With Trained Models 
-
-For example, you want to make prediction between gene PRPH2 and disease C0016529 via using Graph_Own_0.5_model.pth trained model. You should call this command
-```
-    python3 MakePrediction.py Graph_Own_0.5_model.pth PRPH2 C0016529
-```
-
-For example, you want to make prediction between gene AGER and disease C1518922 via using Graph_Own_0.05_model.pth trained model. You should call this command
-
-```
-    python3 MakePrediction.py Graph_Own_0.05_model.pth AGER C1518922
-```
-
-:warning:
-
-Your config.py file must be inside of the ./trained-models.
-
-:warning:
-
-Inside of the config.py file is mention in below
-
-	config = {
-		"email":"example@example.com",
-		"password":"example",
-		"apikey":"example-apikey"
-	}
-
-
-:warning:
-
-
-
-&nbsp;
 
 ## License
 
