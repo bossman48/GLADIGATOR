@@ -12,6 +12,8 @@ This component builds customizable graph files from gathered sources including D
     <img src="build-main-graph.png">
 </p>
 
+***Figure 1***: Visualization of the graph construction process showing how gene-disease associations are built from multiple data sources with customizable score thresholds.
+
 ## Input Parameter
 Only input parameter is gene-disease score threshold.
 

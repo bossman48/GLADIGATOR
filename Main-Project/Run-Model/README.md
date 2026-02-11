@@ -13,6 +13,8 @@ The model uses a graph neural network architecture with:
     <img src="model-structure.png">
 </p>
 
+***Figure 1***: Visualization of the graph neural network architecture showing node embeddings, edge features, and attention mechanisms for gene-disease association prediction.
+
 
 
 ## Input Parameter
