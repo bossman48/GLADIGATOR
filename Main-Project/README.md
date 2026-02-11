@@ -1,5 +1,6 @@
-# Main Project
+# GLADIGATOR: Gene-Disease Association Prediction
 
+## Overview
 This is the core project of GLADIGATOR, containing the proposed method for gene-disease association prediction. The project consists of three main components:
 
 ### 1. Build-Graph
@@ -43,7 +44,7 @@ config = {
 
 **Note**: The DisGeNET API is currently unavailable. Please use the source files in the `source-files` folder instead.
 
-**Commands**:
+**Commands:**
 ```bash
 # To gather DisGeNET information
 python3 gather_gene_disease_information.py
@@ -121,4 +122,3 @@ Main-Project/
 - **Memory Issues**: Reduce batch size in `run_model.py` if encountering memory errors
 - **API Errors**: Check API credentials in `config.py` and network connectivity
 - **File Not Found**: Ensure all required files are downloaded and unzipped
-
