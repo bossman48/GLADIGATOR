@@ -8,18 +8,8 @@ This project compares GLADIGATOR with SkipGNN using DisGeNET's curated dataset. 
 - **Objective**: Compare GLADIGATOR's performance against SkipGNN
 - **Additional Data**: BioGrid and UniProt data for enhanced graph construction
 
-### Project Overview
-- **Dataset**: DisGeNET curated dataset (same as SkipGNN)
-- **Objective**: Compare GLADIGATOR's performance against SkipGNN
-- **Additional Data**: BioGrid and UniProt data for enhanced graph construction
-
 ### 1. Build-Graph
 This component builds graph files based on the DisGeNET curated dataset, enhanced with additional sources.
-
-**Key Features:**
-- Uses DisGeNET curated dataset (same as SkipGNN)
-- Incorporates BioGrid and UniProt for additional information
-- Creates graph files optimized for comparison
 
 **Key Features:**
 - Uses DisGeNET curated dataset (same as SkipGNN)
@@ -34,9 +24,6 @@ python3 build_graph_skipgnn_comparison.py
 # Build graph with custom parameters (if available)
 python3 build_graph_skipgnn_comparison.py --param value
 ```
-
-### 2. Run-Model
-This component trains and tests GLADIGATOR using the built graph files, then compares results with SkipGNN.
 
 ### 2. Run-Model
 This component trains and tests GLADIGATOR using the built graph files, then compares results with SkipGNN.

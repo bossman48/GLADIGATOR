@@ -8,18 +8,8 @@ This project compares GLADIGATOR with other methods using the Open Graph Benchma
 - **Objective**: Compare GLADIGATOR's performance against other methods on a standardized benchmark
 - **Additional Data**: BioGrid and UniProt data for enhanced graph construction
 
-### Project Overview
-- **Dataset**: OGB ***ogbl-biokg*** (Open Graph Benchmark for biological knowledge graphs)
-- **Objective**: Compare GLADIGATOR's performance against other methods on a standardized benchmark
-- **Additional Data**: BioGrid and UniProt data for enhanced graph construction
-
 ### 1. Build-Graph
 This component builds graph files based on the OGB ***ogbl-biokg*** dataset, enhanced with additional sources.
-
-**Key Features:**
-- Uses OGB ***ogbl-biokg*** dataset (standardized benchmark)
-- Incorporates BioGrid and UniProt for additional information
-- Creates graph files optimized for comparison with other methods
 
 **Key Features:**
 - Uses OGB ***ogbl-biokg*** dataset (standardized benchmark)
@@ -38,8 +28,6 @@ python3 build_graph_ogb_comparison.py --param value
 ### 2. Run-Model
 This component trains and tests GLADIGATOR using the built graph files, then compares results with other methods on the OGB benchmark.
 
-### 2. Run-Model
-This component trains and tests GLADIGATOR using the built graph files, then compares results with other methods on the OGB benchmark.
 
 **Comparison Metrics:**
 - OGB evaluation metrics (hits@10, hits@50, mrr)
@@ -47,8 +35,6 @@ This component trains and tests GLADIGATOR using the built graph files, then com
 - Precision
 - Recall
 - F1-score
-- Training time
-- Inference time
 
 **Usage:**
 ```bash
