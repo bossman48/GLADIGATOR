@@ -1,17 +1,19 @@
-# Build-Graph
+# Build-Graph: Graph Construction
 
-In this part, customizable graph files are built. Steps' of the build customizable graph is mentioned in below. 
+## Overview
+This component builds customizable graph files from gathered sources including DisGeNET, BioGrid, and UniProt. The graphs are constructed based on gene-disease associations with customizable score thresholds.
 
-:warning:
+### Key Features:
+- Creates graph files with different gene-disease score thresholds
+- Incorporates multiple data sources for comprehensive graph construction
+- Generates files in PyTorch format for model training
 
-<p align="center"> 
+<p align="center">
     <img src="build-main-graph.png">
 </p>
 
-
 ## Input Parameter
-
-Only input parameter is gene-disease score. 
+Only input parameter is gene-disease score threshold.
 
 ### Example Usages
 For example, you want build a graph that gene-disease score is equal and more that 0.5, you can run this command.
@@ -20,15 +22,11 @@ For example, you want build a graph that gene-disease score is equal and more th
     python3 build_graph.py 0.5
 ```
 
----
-
 Another example, you want build a graph that gene-disease score is equal and more that 0.1, you can run this command.
 
 ```
     python3 build_graph.py 0.1
 ```
-
----
 
 Another example, you want build a graph that gene-disease score is equal and more that 0.05, you can run this command.
 
@@ -36,7 +34,5 @@ Another example, you want build a graph that gene-disease score is equal and mor
     python3 build_graph.py 0.05
 ```
 
-
-:warning:
-
-***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.
+## Important Notes
+- ***python*** keyword is used to call ***python3*** in some machines. If your machine is like that, you can change ***python3*** keyword with ***python*** keyword.

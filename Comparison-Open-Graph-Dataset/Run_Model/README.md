@@ -2,8 +2,8 @@
 
 In this part, our deep learning model is trained and tested. Steps' of the train/test process and the model architecture are mentioned in below.
 
-<p align="center"> 
-    <img src="main-algorithm.png">
+<p align="center">
+    <img src="model-structure.png">
 </p>
 
 
