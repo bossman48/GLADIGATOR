@@ -81,7 +81,8 @@ config = {
 }
 ```
 
-**Note**: The DisGeNET API is currently unavailable. Please use the source files in the `source-files` folder instead.
+**Note**:  The DisGeNET API, which previously offered free access to gene–disease association data for developers, has transitioned to a paid service model and is no longer openly available for researchers. To ensure continued usability, the project provides comprehensive datasets in the `source-files` folder. These pre-collected files contain all the necessary information for the GLADIGATOR model to operate, allowing users to work with gene–disease associations without requiring API access or incurring additional costs.
+
 
 **Commands**:
 ```bash
