@@ -81,17 +81,12 @@ config = {
 }
 ```
 
-**Note**:  The DisGeNET API, which previously offered free access to gene–disease association data for developers, has transitioned to a paid service model and is no longer openly available for researchers. To ensure continued usability, the project provides comprehensive datasets in the `source-files` folder. These pre-collected files contain all the necessary information for the GLADIGATOR model to operate, allowing users to work with gene–disease associations without requiring API access or incurring additional costs.
+## Note
 
+The DisGeNET API, which previously offered free access to gene–disease association data for developers, has transitioned to a paid service model and is no longer openly available. To ensure continued usability, the project provides comprehensive datasets in the `source-files` folder. These pre-collected files contain all the necessary information for the GLADIGATOR model to operate, allowing users to work with gene–disease associations without requiring API access or incurring additional costs.
 
-**Commands**:
-```bash
-# To gather DisGeNET information
-python3 Main-Project/Gathering-Data/gather_gene_disease_information.py
+This note applies **exclusively** to users who intend to retrieve **GDA (gene–disease associations)** and **DDA (disease–disease associations)** data from the DisGeNET platform. For all other users, the datasets included in the repository are sufficient to continue working without requiring direct API access.
 
-# To gather disease information from UMLS
-python3 Main-Project/Gathering-Data/gather_disease_data_from_umls.py
-```
 
 #### 2. Build-Graph
 This step builds customizable graph files from gathered sources (DisGeNET, BioGrid, UniProt).
