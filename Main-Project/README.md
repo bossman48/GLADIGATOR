@@ -1,7 +1,7 @@
-# GLADIGATOR: Gene-Disease Association Prediction
+# GLaDiGAtor: Gene-Disease Association Prediction
 
 ## Overview
-This is the core project of GLADIGATOR, containing the proposed method for gene-disease association prediction. The project consists of three main components:
+This is the core project of GLaDiGAtor, containing the proposed method for gene-disease association prediction. The project consists of three main components:
 
 ### 1. Build-Graph
 This component builds customizable graph files from gathered sources including DisGeNET, BioGrid, and UniProt. The graphs are constructed based on gene-disease associations with customizable score thresholds.

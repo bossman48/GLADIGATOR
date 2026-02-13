@@ -1,11 +1,11 @@
-# GLADIGATOR vs SkipGNN: Performance Comparison
+# GLaDiGAtor vs SkipGNN: Performance Comparison
 
 ## Overview
-This project compares GLADIGATOR with SkipGNN using DisGeNET's curated dataset. The comparison evaluates the performance of both models on the same dataset to demonstrate GLADIGATOR's effectiveness.
+This project compares GLaDiGAtor with SkipGNN using DisGeNET's curated dataset. The comparison evaluates the performance of both models on the same dataset to demonstrate GLaDiGAtor's effectiveness.
 
 ### Project Overview
 - **Dataset**: DisGeNET curated dataset (same as SkipGNN)
-- **Objective**: Compare GLADIGATOR's performance against SkipGNN
+- **Objective**: Compare GLaDiGAtor's performance against SkipGNN
 - **Additional Data**: BioGrid and UniProt data for enhanced graph construction
 
 ### 1. Build-Graph
@@ -26,7 +26,7 @@ python3 Build_Graph/build_graph_skipgnn_comparison.py --param value
 ```
 
 ### 2. Run-Model
-This component trains and tests GLADIGATOR using the built graph files, then compares results with SkipGNN.
+This component trains and tests GLaDiGAtor using the built graph files, then compares results with SkipGNN.
 
 **Comparison Metrics:**
 - AUC-ROC
@@ -85,8 +85,8 @@ Comparison-SkipGNN/
 
 ### Usage Workflow
 1. **Build Graph**: Create graph files using DisGeNET curated dataset
-2. **Train Model**: Train GLADIGATOR on the constructed graph
-3. **Compare Results**: Compare GLADIGATOR's performance with SkipGNN
+2. **Train Model**: Train GLaDiGAtor on the constructed graph
+3. **Compare Results**: Compare GLaDiGAtor's performance with SkipGNN
 4. **Analyze**: Generate comparison reports and visualizations
 
 ### Data Sources
@@ -97,7 +97,7 @@ Comparison-SkipGNN/
 
 ### Expected Results
 The comparison should demonstrate:
-- GLADIGATOR's superior performance on the same dataset
+- GLaDiGAtor's superior performance on the same dataset
 - Improved accuracy and F1-score
 - Better handling of complex relationships
 - More efficient training/inference times
@@ -115,8 +115,8 @@ The comparison should demonstrate:
 
 ### Usage Workflow
 1. **Build Graph**: Create graph files using DisGeNET curated dataset
-2. **Train Model**: Train GLADIGATOR on the constructed graph
-3. **Compare Results**: Compare GLADIGATOR's performance with SkipGNN
+2. **Train Model**: Train GLaDiGAtor on the constructed graph
+3. **Compare Results**: Compare GLaDiGAtor's performance with SkipGNN
 4. **Analyze**: Generate comparison reports and visualizations
 
 ### Data Sources
@@ -127,7 +127,7 @@ The comparison should demonstrate:
 
 ### Expected Results
 The comparison should demonstrate:
-- GLADIGATOR's superior performance on the same dataset
+- GLaDiGAtor's superior performance on the same dataset
 - Improved accuracy and F1-score
 - Better handling of complex relationships
 - More efficient training/inference times

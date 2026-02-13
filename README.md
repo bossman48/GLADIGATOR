@@ -1,6 +1,6 @@
-# GLADIGATOR: Graph Learning-based Disease Gene Association Prediction
+# GLaDiGAtor: Graph Learning-based Disease Gene Association Prediction
 
-GLADIGATOR is a machine learning model that predicts gene-disease associations using protein sequences and disease definitions. The model uses:
+GLaDiGAtor is a machine learning model that predicts gene-disease associations using protein sequences and disease definitions. The model uses:
 
 - **Protein sequences**: Vectorized using the [ProtT5 Model](https://www.uniprot.org/help/downloads#embeddings:~:text=protein%20per%2Dresidue-,Homo%20sapiens,-per%2Dprotein%20per), with vectors saved in `per-protein.h5`
 - **Disease definitions**: Vectorized using the [BioBert v1.1 Model](https://huggingface.co/dmis-lab/biobert-v1.1) from [DMIS-Lab](https://dmis.korea.ac.kr)
@@ -38,25 +38,25 @@ The model uses train/validation/test splits based on [UniRef50](https://www.unip
 
 ## Project Structure
 
-The GLADIGATOR repository contains 6 main parts:
+The GLaDiGAtor repository contains 6 main parts:
 
 ### 1. Main-Project
 This is the core project containing the proposed method. It uses DisGeNET API data source with GDA score limitations and BioGrid data.
 
 ### 2. Comparison-SkipGNN
-This project compares GLADIGATOR with other methods using the DisGeNET curated dataset. It also uses BioGrid data.
+This project compares GLaDiGAtor with other methods using the DisGeNET curated dataset. It also uses BioGrid data.
 
 ### 3. Comparison-Open-Graph-Dataset
-This project compares GLADIGATOR with other methods using the OGB (ogbl-biokg) dataset. It also uses BioGrid data.
+This project compares GLaDiGAtor with other methods using the OGB (ogbl-biokg) dataset. It also uses BioGrid data.
 
 ### 4. Make-Prediction
 This contains trained models of the proposed methods. Users can make gene-disease association predictions by running `MakePrediction.py`.
 
 ### 5. Source Files
-This directory contains the source data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
+This directory contains the source data files used by the GLaDiGAtor project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
 
 ### 6. Graph Files
-This directory contains the graph data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
+This directory contains the graph data files used by the GLaDiGAtor project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency. See the README file in this directory for detailed file descriptions.
 
 ## Usage
 
@@ -83,7 +83,7 @@ config = {
 
 ## Note
 
-The DisGeNET API, which previously offered free access to gene–disease association data for developers, has transitioned to a paid service model and is no longer openly available. To ensure continued usability, the project provides comprehensive datasets in the `source-files` folder. These pre-collected files contain all the necessary information for the GLADIGATOR model to operate, allowing users to work with gene–disease associations without requiring API access or incurring additional costs.
+The DisGeNET API, which previously offered free access to gene–disease association data for developers, has transitioned to a paid service model and is no longer openly available. To ensure continued usability, the project provides comprehensive datasets in the `source-files` folder. These pre-collected files contain all the necessary information for the GLaDiGAtor model to operate, allowing users to work with gene–disease associations without requiring API access or incurring additional costs.
 
 This note applies **exclusively** to users who intend to retrieve **GDA (gene–disease associations)** and **DDA (disease–disease associations)** data from the DisGeNET platform. For all other users, the datasets included in the repository are sufficient to continue working without requiring direct API access.
 

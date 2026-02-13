@@ -1,7 +1,7 @@
 # Run-Model: Model Training and Testing
 
 ## Overview
-This component trains and tests GLADIGATOR using the built graph files, then compares results with SkipGNN.
+This component trains and tests GLaDiGAtor using the built graph files, then compares results with SkipGNN.
 
 ### Model Architecture
 The model uses a graph neural network architecture with:

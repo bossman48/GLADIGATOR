@@ -1,11 +1,11 @@
-# GLADIGATOR vs OGB Benchmark: Performance Comparison
+# GLaDiGAtor vs OGB Benchmark: Performance Comparison
 
 ## Overview
-This project compares GLADIGATOR with other methods using the Open Graph Benchmark (OGB) ***ogbl-biokg*** dataset. The comparison evaluates GLADIGATOR's performance on a standardized benchmark dataset.
+This project compares GLaDiGAtor with other methods using the Open Graph Benchmark (OGB) ***ogbl-biokg*** dataset. The comparison evaluates GLaDiGAtor's performance on a standardized benchmark dataset.
 
 ### Project Overview
 - **Dataset**: OGB ***ogbl-biokg*** (Open Graph Benchmark for biological knowledge graphs)
-- **Objective**: Compare GLADIGATOR's performance against other methods on a standardized benchmark
+- **Objective**: Compare GLaDiGAtor's performance against other methods on a standardized benchmark
 - **Additional Data**: BioGrid and UniProt data for enhanced graph construction
 
 ### 1. Build-Graph
@@ -26,7 +26,7 @@ python3 Build_Graph/build_graph_ogb_comparison.py --param value
 ```
 
 ### 2. Run-Model
-This component trains and tests GLADIGATOR using the built graph files, then compares results with other methods on the OGB benchmark.
+This component trains and tests GLaDiGAtor using the built graph files, then compares results with other methods on the OGB benchmark.
 
 
 **Comparison Metrics:**
@@ -94,8 +94,8 @@ Comparison-Open-Graph-Dataset/
 
 ### Usage Workflow
 1. **Build Graph**: Create graph files using OGB ***ogbl-biokg*** dataset
-2. **Train Model**: Train GLADIGATOR on the constructed graph
-3. **Compare Results**: Compare GLADIGATOR's performance with other methods
+2. **Train Model**: Train GLaDiGAtor on the constructed graph
+3. **Compare Results**: Compare GLaDiGAtor's performance with other methods
 4. **Analyze**: Generate comparison reports and visualizations
 
 ### Data Sources
@@ -106,7 +106,7 @@ Comparison-Open-Graph-Dataset/
 
 ### Expected Results
 The comparison should demonstrate:
-- GLADIGATOR's superior performance on the standardized benchmark
+- GLaDiGAtor's superior performance on the standardized benchmark
 - Improved accuracy and F1-score compared to other methods
 - Better handling of complex relationships in biological knowledge graphs
 - Competitive performance on OGB evaluation metrics
@@ -125,8 +125,8 @@ The comparison should demonstrate:
 
 ### Usage Workflow
 1. **Build Graph**: Create graph files using OGB ***ogbl-biokg*** dataset
-2. **Train Model**: Train GLADIGATOR on the constructed graph
-3. **Compare Results**: Compare GLADIGATOR's performance with other methods
+2. **Train Model**: Train GLaDiGAtor on the constructed graph
+3. **Compare Results**: Compare GLaDiGAtor's performance with other methods
 4. **Analyze**: Generate comparison reports and visualizations
 
 ### Data Sources
@@ -137,7 +137,7 @@ The comparison should demonstrate:
 
 ### Expected Results
 The comparison should demonstrate:
-- GLADIGATOR's superior performance on the standardized benchmark
+- GLaDiGAtor's superior performance on the standardized benchmark
 - Improved accuracy and F1-score compared to other methods
 - Better handling of complex relationships in biological knowledge graphs
 - Competitive performance on OGB evaluation metrics

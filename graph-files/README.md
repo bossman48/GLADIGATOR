@@ -1,6 +1,6 @@
 # Graph Files
 
-This directory contains the graph data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency.
+This directory contains the graph data files used by the GLaDiGAtor project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency.
 
 ## Important: Unzip Files First
 
@@ -34,7 +34,7 @@ Use 7-Zip application to extract all .7z files
 ## File Descriptions
 
 ### Graph_Own_*.pt
-Graph files created by the GLADIGATOR model with different gene-disease score thresholds:
+Graph files created by the GLaDiGAtor model with different gene-disease score thresholds:
 
 - `Graph_Own_0.5.pt`: Graph with gene-disease score threshold ≥ 0.5
 - `Graph_Own_0.1.pt`: Graph with gene-disease score threshold ≥ 0.1

@@ -1,6 +1,6 @@
 # Source Files
 
-This directory contains the source data files used by the GLADIGATOR project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency.
+This directory contains the source data files used by the GLaDiGAtor project. Some files are compressed due to their large size (over 100MB) to optimize storage and transfer efficiency.
 
 ## Important: Unzip Files First
 
